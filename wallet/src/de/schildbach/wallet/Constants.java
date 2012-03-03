@@ -33,7 +33,7 @@ import android.text.format.DateUtils;
 import com.google.common.io.BaseEncoding;
 import com.squareup.okhttp.OkHttpClient;
 
-import de.schildbach.wallet_test.R;
+import de.schildbach.wallet.R;
 
 /**
  * @author Andreas Schildbach
