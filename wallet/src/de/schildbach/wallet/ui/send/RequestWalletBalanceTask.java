@@ -48,7 +48,7 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
 import de.schildbach.wallet.Constants;
-import de.schildbach.wallet_test.R;
+import de.schildbach.wallet.R;
 
 import android.os.Handler;
 import android.os.Looper;
