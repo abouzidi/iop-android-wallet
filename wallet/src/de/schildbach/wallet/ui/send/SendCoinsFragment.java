@@ -37,6 +37,7 @@ import org.bitcoinj.core.TransactionConfidence;
 import org.bitcoinj.core.TransactionConfidence.ConfidenceType;
 import org.bitcoinj.core.VerificationException;
 import org.bitcoinj.core.VersionedChecksummedBytes;
+import org.bitcoinj.params.TestNet3Params;
 import org.bitcoinj.protocols.payments.PaymentProtocol;
 import org.bitcoinj.uri.BitcoinURI;
 import org.bitcoinj.utils.MonetaryFormat;
@@ -133,7 +134,7 @@ import de.schildbach.wallet.ui.TransactionsAdapter;
 import de.schildbach.wallet.util.Bluetooth;
 import de.schildbach.wallet.util.Nfc;
 import de.schildbach.wallet.util.WalletUtils;
-import de.schildbach.wallet.R;
+import de.schildbach.wallet.regtest.R;
 
 /**
  * @author Andreas Schildbach
@@ -968,8 +969,9 @@ public final class SendCoinsFragment extends Fragment
 		try {
 			addressStr = receivingAddressView.getText().toString().trim();
 			log.info("Address value: "+ addressStr);
-			if (!addressStr.isEmpty() && Constants.NETWORK_PARAMETERS.equals(Address.getParametersFromAddress(addressStr)))
-			{
+			// como la regtest y la testnet tienen los mismos parametros el equals puede fallar ya que el getParametersFromAddress no los distingue y puede traer uno u el otro indistintamente
+			boolean isAddressHeaderValid = Constants.NETWORK_PARAMETERS.equals(Address.getParametersFromAddress(addressStr)) || TestNet3Params.get().equals(Address.getParametersFromAddress(addressStr));
+			if (!addressStr.isEmpty() && isAddressHeaderValid) {
 				final String label = AddressBookProvider.resolveLabel(activity, addressStr);
 				validatedAddress = new AddressAndLabel(Constants.NETWORK_PARAMETERS, addressStr, label);
 				receivingAddressView.setText(null);

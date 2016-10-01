@@ -31,6 +31,7 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -38,7 +39,7 @@ import de.schildbach.wallet.AddressBookProvider;
 import de.schildbach.wallet.Constants;
 import de.schildbach.wallet.WalletApplication;
 import de.schildbach.wallet.util.WalletUtils;
-import de.schildbach.wallet.R;
+import de.schildbach.wallet.regtest.R;
 
 /**
  * @author Andreas Schildbach
@@ -132,28 +133,26 @@ public final class EditAddressBookEntryFragment extends DialogFragment
 			@Override
 			public void onClick(final DialogInterface dialog, final int which)
 			{
-				if (which == DialogInterface.BUTTON_POSITIVE)
-				{
-					final String newLabel = viewLabel.getText().toString().trim();
+				try {
+					if (which == DialogInterface.BUTTON_POSITIVE) {
+						final String newLabel = viewLabel.getText().toString().trim();
 
-					if (!newLabel.isEmpty())
-					{
-						final ContentValues values = new ContentValues();
-						values.put(AddressBookProvider.KEY_LABEL, newLabel);
+						if (!newLabel.isEmpty()) {
+							final ContentValues values = new ContentValues();
+							values.put(AddressBookProvider.KEY_LABEL, newLabel);
 
-						if (isAdd)
-							contentResolver.insert(uri, values);
-						else
-							contentResolver.update(uri, values, null, null);
-					}
-					else if (!isAdd)
-					{
+							if (isAdd) {
+								contentResolver.insert(uri, values);
+							}else
+								contentResolver.update(uri, values, null, null);
+						} else if (!isAdd) {
+							contentResolver.delete(uri, null, null);
+						}
+					} else if (which == DialogInterface.BUTTON_NEUTRAL) {
 						contentResolver.delete(uri, null, null);
 					}
-				}
-				else if (which == DialogInterface.BUTTON_NEUTRAL)
-				{
-					contentResolver.delete(uri, null, null);
+				}catch (Exception e){
+					e.printStackTrace();
 				}
 
 				dismiss();

@@ -31,8 +31,10 @@ import android.net.Uri;
 /**
  * @author Andreas Schildbach
  */
-public class AddressBookProvider extends ContentProvider
-{
+public class AddressBookProvider extends ContentProvider {
+
+	public static final String AUTORITY = "de.schildbach.wallet.regtest";
+
 	private static final String DATABASE_TABLE = "address_book";
 
 	public static final String KEY_ROWID = "_id";
@@ -43,9 +45,8 @@ public class AddressBookProvider extends ContentProvider
 	public static final String SELECTION_IN = "in";
 	public static final String SELECTION_NOTIN = "notin";
 
-	public static Uri contentUri(final String packageName)
-	{
-		return Uri.parse("content://" + packageName + '.' + DATABASE_TABLE);
+	public static Uri contentUri(final String packageName) {
+		return Uri.parse("content://" + AUTORITY + '.' + DATABASE_TABLE);
 	}
 
 	public static String resolveLabel(final Context context, final String address)

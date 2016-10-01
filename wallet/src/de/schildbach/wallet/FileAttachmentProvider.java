@@ -32,11 +32,13 @@ import android.provider.MediaStore;
 /**
  * @author Andreas Schildbach
  */
-public final class FileAttachmentProvider extends ContentProvider
-{
+public final class FileAttachmentProvider extends ContentProvider {
+
+	public static final String AUTORITY = "de.schildbach.wallet.regtest";
+
 	public static Uri contentUri(final String packageName, final File file)
 	{
-		return Uri.parse("content://" + packageName + ".file_attachment" + file.getAbsolutePath());
+		return Uri.parse("content://" + AUTORITY + ".file_attachment" + file.getAbsolutePath());
 	}
 
 	@Override

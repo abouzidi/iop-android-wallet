@@ -28,8 +28,8 @@ import android.preference.PreferenceFragment;
 
 import de.schildbach.wallet.Constants;
 import de.schildbach.wallet.WalletApplication;
-import de.schildbach.wallet.BuildConfig;
-import de.schildbach.wallet.R;
+import de.schildbach.wallet.regtest.BuildConfig;
+import de.schildbach.wallet.regtest.R;
 
 /**
  * @author Andreas Schildbach

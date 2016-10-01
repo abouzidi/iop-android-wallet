@@ -57,8 +57,10 @@ import android.text.format.DateUtils;
 /**
  * @author Andreas Schildbach
  */
-public class ExchangeRatesProvider extends ContentProvider
-{
+public class ExchangeRatesProvider extends ContentProvider {
+
+	public static final String AUTORITY = "de.schildbach.wallet.regtest";
+
 	public static class ExchangeRate
 	{
 		public ExchangeRate(final org.bitcoinj.utils.ExchangeRate rate, final String source)
@@ -140,7 +142,7 @@ public class ExchangeRatesProvider extends ContentProvider
 
 	public static Uri contentUri(final String packageName, final boolean offline)
 	{
-		final Uri.Builder uri = Uri.parse("content://" + packageName + '.' + "exchange_rates").buildUpon();
+		final Uri.Builder uri = Uri.parse("content://" + AUTORITY + '.' + "exchange_rates").buildUpon();
 		if (offline)
 			uri.appendQueryParameter(QUERY_PARAM_OFFLINE, "1");
 		return uri.build();

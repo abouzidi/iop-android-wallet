@@ -38,7 +38,7 @@ android {
     buildToolsVersion '24'
 
     defaultConfig {
-        applicationId "org.iop"
+        applicationId "org.iop.regtest"
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1

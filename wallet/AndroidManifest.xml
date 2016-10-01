@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
-	package="de.schildbach.wallet"
+	package="de.schildbach.wallet.regtest"
 	android:installLocation="internalOnly"
-	android:versionCode="261"
-	android:versionName="4.71" >
+	android:versionCode="262"
+	android:versionName="4.72" >
 
 	<uses-sdk
 		android:minSdkVersion="15"
@@ -187,15 +187,16 @@
 
 		<provider
 			android:name="de.schildbach.wallet.AddressBookProvider"
-			android:authorities="de.schildbach.wallet.address_book"
+			android:authorities="de.schildbach.wallet.regtest.address_book"
+			android:enabled="true"
 			android:exported="false" />
 		<provider
 			android:name="de.schildbach.wallet.ExchangeRatesProvider"
-			android:authorities="de.schildbach.wallet.exchange_rates"
+			android:authorities="de.schildbach.wallet.regtest.exchange_rates"
 			android:exported="false" />
 		<provider
 			android:name="de.schildbach.wallet.FileAttachmentProvider"
-			android:authorities="de.schildbach.wallet.file_attachment"
+			android:authorities="de.schildbach.wallet.regtest.file_attachment"
 			android:exported="false"
 			android:grantUriPermissions="true" />
 

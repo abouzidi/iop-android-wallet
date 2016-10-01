@@ -86,7 +86,7 @@ import de.schildbach.wallet.util.HttpGetThread;
 import de.schildbach.wallet.util.Io;
 import de.schildbach.wallet.util.Nfc;
 import de.schildbach.wallet.util.WalletUtils;
-import de.schildbach.wallet.R;
+import de.schildbach.wallet.regtest.R;
 
 /**
  * @author Andreas Schildbach

@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetSocketAddress;
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -42,6 +43,7 @@ import org.bitcoinj.core.CheckpointManager;
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.FilteredBlock;
 import org.bitcoinj.core.Peer;
+import org.bitcoinj.core.PeerAddress;
 import org.bitcoinj.core.PeerGroup;
 import org.bitcoinj.core.Sha256Hash;
 import org.bitcoinj.core.StoredBlock;
@@ -92,12 +94,13 @@ import de.schildbach.wallet.Configuration;
 import de.schildbach.wallet.Constants;
 import de.schildbach.wallet.WalletApplication;
 import de.schildbach.wallet.WalletBalanceWidgetProvider;
+import de.schildbach.wallet.networks.RegtestUtil;
 import de.schildbach.wallet.service.BlockchainState.Impediment;
 import de.schildbach.wallet.ui.WalletActivity;
 import de.schildbach.wallet.util.CrashReporter;
 import de.schildbach.wallet.util.ThrottlingWalletChangeListener;
 import de.schildbach.wallet.util.WalletUtils;
-import de.schildbach.wallet.R;
+import de.schildbach.wallet.regtest.R;
 
 /**
  * @author Andreas Schildbach
@@ -242,8 +245,8 @@ public class BlockchainServiceImpl extends android.app.Service implements Blockc
 		}
 
 		@Override
-		public void onPeerConnected(final Peer peer, final int peerCount)
-		{
+		public void onPeerConnected(final Peer peer, final int peerCount) {
+			log.info("######### Peer connected!! ######");
 			this.peerCount = peerCount;
 			changed(peerCount);
 		}
@@ -446,7 +449,13 @@ public class BlockchainServiceImpl extends android.app.Service implements Blockc
 //						normalPeerDiscovery.shutdown();
 //					}
 //				});
-				peerGroup.addPeerDiscovery(new DnsDiscovery(Constants.NETWORK_PARAMETERS));
+//				peerGroup.addPeerDiscovery(new DnsDiscovery(Constants.NETWORK_PARAMETERS));
+
+				for (PeerAddress peerAddress : RegtestUtil.getConnectedPeers(Constants.NETWORK_PARAMETERS)) {
+					peerGroup.addAddress(peerAddress);
+				}
+
+				log.info("QQQQQ -PEnding peers- QQQQQQ\n peers: "+ Arrays.toString(peerGroup.getPendingPeers().toArray()));
 
 				// start peergroup
 				peerGroup.startAsync();

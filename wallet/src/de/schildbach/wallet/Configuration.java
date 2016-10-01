@@ -33,7 +33,7 @@ import android.text.format.DateUtils;
 import com.google.common.base.Strings;
 
 import de.schildbach.wallet.ExchangeRatesProvider.ExchangeRate;
-import de.schildbach.wallet.R;
+import de.schildbach.wallet.regtest.R;
 
 /**
  * @author Andreas Schildbach
@@ -52,7 +52,11 @@ public class Configuration
 	public static final String PREFS_KEY_EXCHANGE_CURRENCY = "exchange_currency";
 	public static final String PREFS_KEY_TRUSTED_PEER = "trusted_peer";
 	public static final String PREFS_KEY_TRUSTED_PEER_ONLY = "trusted_peer_only";
-	public static final String PREFS_KEY_BLOCK_EXPLORER = "block_explorer";
+
+	//public static final String PREFS_KEY_BLOCK_EXPLORER = "block_explorer";
+	// IoP explorer
+	public static final String PREFS_KEY_BLOCK_EXPLORER = "explorer.fermat.community";
+
 	public static final String PREFS_KEY_DATA_USAGE = "data_usage";
 	public static final String PREFS_KEY_REMIND_BALANCE = "remind_balance";
 	public static final String PREFS_KEY_DISCLAIMER = "disclaimer";

@@ -34,7 +34,7 @@ import android.text.Html;
 import de.schildbach.wallet.Constants;
 import de.schildbach.wallet.util.Toast;
 import de.schildbach.wallet.util.WholeStringBuilder;
-import de.schildbach.wallet.R;
+import de.schildbach.wallet.regtest.R;
 
 /**
  * @author Andreas Schildbach
