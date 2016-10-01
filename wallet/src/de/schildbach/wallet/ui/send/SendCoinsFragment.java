@@ -191,9 +191,11 @@ public final class SendCoinsFragment extends Fragment
 	private Transaction dryrunTransaction;
 	private Exception dryrunException;
 
-	private static final int ID_RATE_LOADER = 0;
-	private static final int ID_RECEIVING_ADDRESS_BOOK_LOADER = 1;
-	private static final int ID_RECEIVING_ADDRESS_NAME_LOADER = 2;
+	// comentado por ahora ya que no tenemos web service de rate
+//	private static final int ID_RATE_LOADER = 0;
+	// comentado por ahora a ver que pasa
+//	private static final int ID_RECEIVING_ADDRESS_BOOK_LOADER = 1;
+//	private static final int ID_RECEIVING_ADDRESS_NAME_LOADER = 2;
 
 	private static final int REQUEST_CODE_SCAN = 0;
 	private static final int REQUEST_CODE_ENABLE_BLUETOOTH_FOR_PAYMENT_REQUEST = 1;
@@ -231,9 +233,10 @@ public final class SendCoinsFragment extends Fragment
 			final Bundle args = new Bundle();
 			args.putString(ReceivingAddressLoaderCallbacks.ARG_CONSTRAINT, s.toString());
 
-			loaderManager.restartLoader(ID_RECEIVING_ADDRESS_BOOK_LOADER, args, receivingAddressLoaderCallbacks);
-			if (config.getLookUpWalletNames())
-				loaderManager.restartLoader(ID_RECEIVING_ADDRESS_NAME_LOADER, args, receivingAddressLoaderCallbacks);
+			// comentado por ahora..
+//			loaderManager.restartLoader(ID_RECEIVING_ADDRESS_BOOK_LOADER, args, receivingAddressLoaderCallbacks);
+//			if (config.getLookUpWalletNames())
+//				loaderManager.restartLoader(ID_RECEIVING_ADDRESS_NAME_LOADER, args, receivingAddressLoaderCallbacks);
 		}
 
 		@Override
@@ -415,13 +418,15 @@ public final class SendCoinsFragment extends Fragment
 		{
 			final String constraint = Strings.nullToEmpty(args != null ? args.getString(ARG_CONSTRAINT) : null);
 
-			if (id == ID_RECEIVING_ADDRESS_BOOK_LOADER)
-				return new CursorLoader(context, AddressBookProvider.contentUri(context.getPackageName()), null, AddressBookProvider.SELECTION_QUERY,
-						new String[] { constraint }, null);
-			else if (id == ID_RECEIVING_ADDRESS_NAME_LOADER)
-				return new ReceivingAddressNameLoader(context, constraint);
-			else
-				throw new IllegalArgumentException();
+			// Comentado por ahora a ver que pasa..
+//			if (id == ID_RECEIVING_ADDRESS_BOOK_LOADER)
+//				return new CursorLoader(context, AddressBookProvider.contentUri(context.getPackageName()), null, AddressBookProvider.SELECTION_QUERY,
+//						new String[] { constraint }, null);
+//			else if (id == ID_RECEIVING_ADDRESS_NAME_LOADER)
+//				return new ReceivingAddressNameLoader(context, constraint);
+//			else
+//				throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Method not implemented..");
 		}
 
 		@Override
@@ -757,9 +762,11 @@ public final class SendCoinsFragment extends Fragment
 		amountCalculatorLink.setListener(amountsListener);
 		privateKeyPasswordView.addTextChangedListener(privateKeyPasswordListener);
 
-		loaderManager.initLoader(ID_RATE_LOADER, null, rateLoaderCallbacks);
-		loaderManager.initLoader(ID_RECEIVING_ADDRESS_BOOK_LOADER, null, receivingAddressLoaderCallbacks);
-		loaderManager.initLoader(ID_RECEIVING_ADDRESS_NAME_LOADER, null, receivingAddressLoaderCallbacks);
+		// Lo comento porque no tenemos web service de rate
+//		loaderManager.initLoader(ID_RATE_LOADER, null, rateLoaderCallbacks);
+		// comento a ver que pasa
+//		loaderManager.initLoader(ID_RECEIVING_ADDRESS_BOOK_LOADER, null, receivingAddressLoaderCallbacks);
+//		loaderManager.initLoader(ID_RECEIVING_ADDRESS_NAME_LOADER, null, receivingAddressLoaderCallbacks);
 
 		updateView();
 		handler.post(dryrunRunnable);
@@ -768,9 +775,11 @@ public final class SendCoinsFragment extends Fragment
 	@Override
 	public void onPause()
 	{
-		loaderManager.destroyLoader(ID_RECEIVING_ADDRESS_NAME_LOADER);
-		loaderManager.destroyLoader(ID_RECEIVING_ADDRESS_BOOK_LOADER);
-		loaderManager.destroyLoader(ID_RATE_LOADER);
+		// comento a ver que pasa
+//		loaderManager.destroyLoader(ID_RECEIVING_ADDRESS_NAME_LOADER);
+//		loaderManager.destroyLoader(ID_RECEIVING_ADDRESS_BOOK_LOADER);
+		// comentado por ahora por no tener web service de rato
+//		loaderManager.destroyLoader(ID_RATE_LOADER);
 
 		privateKeyPasswordView.removeTextChangedListener(privateKeyPasswordListener);
 		amountCalculatorLink.setListener(null);
@@ -954,11 +963,11 @@ public final class SendCoinsFragment extends Fragment
 		return super.onOptionsItemSelected(item);
 	}
 
-	private void validateReceivingAddress()
-	{
-		try
-		{
-			final String addressStr = receivingAddressView.getText().toString().trim();
+	private void validateReceivingAddress() {
+		String addressStr = null;
+		try {
+			addressStr = receivingAddressView.getText().toString().trim();
+			log.info("Address value: "+ addressStr);
 			if (!addressStr.isEmpty() && Constants.NETWORK_PARAMETERS.equals(Address.getParametersFromAddress(addressStr)))
 			{
 				final String label = AddressBookProvider.resolveLabel(activity, addressStr);
@@ -966,10 +975,11 @@ public final class SendCoinsFragment extends Fragment
 				receivingAddressView.setText(null);
 			}
 		}
-		catch (final AddressFormatException x)
-		{
+		catch (final AddressFormatException x) {
 			// swallow
-		}
+		} catch (Exception e){
+			e.printStackTrace();
+		} 
 	}
 
 	private void handleCancel()
@@ -1028,17 +1038,14 @@ public final class SendCoinsFragment extends Fragment
 			log.warn("unclear focus");
 	}
 
-	private void handleGo()
-	{
+	private void handleGo() {
 		privateKeyBadPasswordView.setVisibility(View.INVISIBLE);
 
-		if (wallet.isEncrypted())
-		{
-			new DeriveKeyTask(backgroundHandler)
-			{
+		if (wallet.isEncrypted()) {
+
+			new DeriveKeyTask(backgroundHandler) {
 				@Override
-				protected void onSuccess(final KeyParameter encryptionKey, final boolean wasChanged)
-				{
+				protected void onSuccess(final KeyParameter encryptionKey, final boolean wasChanged) {
 					if (wasChanged)
 						application.backupWallet();
 					signAndSendPayment(encryptionKey);
@@ -1046,9 +1053,7 @@ public final class SendCoinsFragment extends Fragment
 			}.deriveKey(wallet, privateKeyPasswordView.getText().toString().trim());
 
 			setState(State.DECRYPTING);
-		}
-		else
-		{
+		} else {
 			signAndSendPayment(null);
 		}
 	}

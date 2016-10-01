@@ -93,7 +93,7 @@ public final class Constants
 			: BITEASY_API_URL_TEST;
 
 	/** Currency code for the wallet name resolver. */
-	public static final String WALLET_NAME_CURRENCY_CODE = NETWORK_PARAMETERS.getId().equals(NetworkParameters.ID_MAINNET) ? "btc" : "tbtc";
+	public static final String WALLET_NAME_CURRENCY_CODE = NETWORK_PARAMETERS.getId().equals(NetworkParameters.ID_MAINNET) ? "iop" : "tiop";
 
 	/** URL to fetch version alerts from. */
 	public static final String VERSION_URL = "https://wallet.schildbach.de/version";
@@ -108,17 +108,17 @@ public final class Constants
 	public static final int MAX_NUM_CONFIRMATIONS = 7;
 
 	/** User-agent to use for network access. */
-	public static final String USER_AGENT = "Bitcoin Wallet";
+	public static final String USER_AGENT = "IoP Wallet";
 
 	/** Default currency to use if all default mechanisms fail. */
 	public static final String DEFAULT_EXCHANGE_CURRENCY = "USD";
 
 	/** Donation address for tip/donate action. */
 	public static final String DONATION_ADDRESS = NETWORK_PARAMETERS.getId().equals(NetworkParameters.ID_MAINNET)
-			? "1Hf8g3XZnDKdCy6FDQt1DrcWz3GeiYLDRS" : null;
+			? "pNeSkfSN9nLtxvywCBEyk6Pomh6ArJDYtN" : null;
 
 	/** Recipient e-mail address for reports. */
-	public static final String REPORT_EMAIL = "bitcoin.wallet.developers@gmail.com";
+	public static final String REPORT_EMAIL = "matias.furszyfer@fermat.org";
 
 	/** Subject line for manually reported issues. */
 	public static final String REPORT_SUBJECT_ISSUE = "Reported issue";

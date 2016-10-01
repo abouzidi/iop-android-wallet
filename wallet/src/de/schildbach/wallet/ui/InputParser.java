@@ -109,7 +109,7 @@ public abstract class InputParser
 					error(R.string.input_parser_invalid_paymentrequest, x.getMessage());
 				}
 			}
-			else if (input.startsWith("bitcoin:"))
+			else if (input.startsWith("IoP:"))
 			{
 				try
 				{

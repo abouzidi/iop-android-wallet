@@ -51,6 +51,7 @@ import org.bitcoinj.core.listeners.AbstractPeerDataEventListener;
 import org.bitcoinj.core.listeners.PeerConnectedEventListener;
 import org.bitcoinj.core.listeners.PeerDataEventListener;
 import org.bitcoinj.core.listeners.PeerDisconnectedEventListener;
+import org.bitcoinj.net.discovery.DnsDiscovery;
 import org.bitcoinj.net.discovery.MultiplexingDiscovery;
 import org.bitcoinj.net.discovery.PeerDiscovery;
 import org.bitcoinj.net.discovery.PeerDiscoveryException;
@@ -146,6 +147,8 @@ public class BlockchainServiceImpl extends android.app.Service implements Blockc
 		@Override
 		public void onCoinsReceived(final Wallet wallet, final Transaction tx, final Coin prevBalance, final Coin newBalance)
 		{
+			log.info("################### Coins received  ##########################");
+
 			transactionsReceived.incrementAndGet();
 
 			final int bestChainHeight = blockChain.getBestChainHeight();
@@ -302,6 +305,10 @@ public class BlockchainServiceImpl extends android.app.Service implements Blockc
 		@Override
 		public void onBlocksDownloaded(final Peer peer, final Block block, final FilteredBlock filteredBlock, final int blocksLeft)
 		{
+			log.info("############# on Blockcs downloaded ###########");
+			log.info("Peer: "+peer+", Block: "+block);
+			log.info("############# on Blockcs downloaded end ###########");
+
 			delayHandler.removeCallbacksAndMessages(null);
 
 			final long now = System.currentTimeMillis();
@@ -397,51 +404,59 @@ public class BlockchainServiceImpl extends android.app.Service implements Blockc
 				peerGroup.setConnectTimeoutMillis(Constants.PEER_TIMEOUT_MS);
 				peerGroup.setPeerDiscoveryTimeoutMillis(Constants.PEER_DISCOVERY_TIMEOUT_MS);
 
-				peerGroup.addPeerDiscovery(new PeerDiscovery()
-				{
-					private final PeerDiscovery normalPeerDiscovery = MultiplexingDiscovery.forServices(Constants.NETWORK_PARAMETERS, 0);
 
-					@Override
-					public InetSocketAddress[] getPeers(final long services, final long timeoutValue, final TimeUnit timeoutUnit)
-							throws PeerDiscoveryException
-					{
-						final List<InetSocketAddress> peers = new LinkedList<InetSocketAddress>();
-
-						boolean needsTrimPeersWorkaround = false;
-
-						if (hasTrustedPeer)
-						{
-							log.info("trusted peer '" + trustedPeerHost + "'" + (connectTrustedPeerOnly ? " only" : ""));
-
-							final InetSocketAddress addr = new InetSocketAddress(trustedPeerHost, Constants.NETWORK_PARAMETERS.getPort());
-							if (addr.getAddress() != null)
-							{
-								peers.add(addr);
-								needsTrimPeersWorkaround = true;
-							}
-						}
-
-						if (!connectTrustedPeerOnly)
-							peers.addAll(Arrays.asList(normalPeerDiscovery.getPeers(services, timeoutValue, timeoutUnit)));
-
-						// workaround because PeerGroup will shuffle peers
-						if (needsTrimPeersWorkaround)
-							while (peers.size() >= maxConnectedPeers)
-								peers.remove(peers.size() - 1);
-
-						return peers.toArray(new InetSocketAddress[0]);
-					}
-
-					@Override
-					public void shutdown()
-					{
-						normalPeerDiscovery.shutdown();
-					}
-				});
+//				peerGroup.addPeerDiscovery(new PeerDiscovery()
+//				{
+//					private final PeerDiscovery normalPeerDiscovery = MultiplexingDiscovery.forServices(Constants.NETWORK_PARAMETERS, 0);
+//
+//					@Override
+//					public InetSocketAddress[] getPeers(final long services, final long timeoutValue, final TimeUnit timeoutUnit)
+//							throws PeerDiscoveryException
+//					{
+//						final List<InetSocketAddress> peers = new LinkedList<InetSocketAddress>();
+//
+//						boolean needsTrimPeersWorkaround = false;
+//
+//						if (hasTrustedPeer)
+//						{
+//							log.info("trusted peer '" + trustedPeerHost + "'" + (connectTrustedPeerOnly ? " only" : ""));
+//
+//							final InetSocketAddress addr = new InetSocketAddress(trustedPeerHost, Constants.NETWORK_PARAMETERS.getPort());
+//							if (addr.getAddress() != null)
+//							{
+//								peers.add(addr);
+//								needsTrimPeersWorkaround = true;
+//							}
+//						}
+//
+//						if (!connectTrustedPeerOnly)
+//							peers.addAll(Arrays.asList(normalPeerDiscovery.getPeers(services, timeoutValue, timeoutUnit)));
+//
+//						// workaround because PeerGroup will shuffle peers
+//						if (needsTrimPeersWorkaround)
+//							while (peers.size() >= maxConnectedPeers)
+//								peers.remove(peers.size() - 1);
+//
+//						return peers.toArray(new InetSocketAddress[0]);
+//					}
+//
+//					@Override
+//					public void shutdown()
+//					{
+//						normalPeerDiscovery.shutdown();
+//					}
+//				});
+				peerGroup.addPeerDiscovery(new DnsDiscovery(Constants.NETWORK_PARAMETERS));
 
 				// start peergroup
 				peerGroup.startAsync();
 				peerGroup.startBlockChainDownload(blockchainDownloadListener);
+
+				log.info("####### Blockchain ##############");
+				log.info("Blockchain height: "+blockChain.getBestChainHeight());
+				log.info("BlockStore: "+blockStore.getParams().getGenesisBlock());
+				log.info("#######  end Blockchain ##############");
+
 			}
 			else if (!impediments.isEmpty() && peerGroup != null)
 			{
@@ -606,21 +621,21 @@ public class BlockchainServiceImpl extends android.app.Service implements Blockc
 
 			final long earliestKeyCreationTime = wallet.getEarliestKeyCreationTime();
 
-			if (!blockChainFileExists && earliestKeyCreationTime > 0)
-			{
-				try
-				{
-					final Stopwatch watch = Stopwatch.createStarted();
-					final InputStream checkpointsInputStream = getAssets().open(Constants.Files.CHECKPOINTS_FILENAME);
-					CheckpointManager.checkpoint(Constants.NETWORK_PARAMETERS, checkpointsInputStream, blockStore, earliestKeyCreationTime);
-					watch.stop();
-					log.info("checkpoints loaded from '{}', took {}", Constants.Files.CHECKPOINTS_FILENAME, watch);
-				}
-				catch (final IOException x)
-				{
-					log.error("problem reading checkpoints, continuing without", x);
-				}
-			}
+//			if (!blockChainFileExists && earliestKeyCreationTime > 0)
+//			{
+//				try
+//				{
+//					final Stopwatch watch = Stopwatch.createStarted();
+//					final InputStream checkpointsInputStream = getAssets().open(Constants.Files.CHECKPOINTS_FILENAME);
+//					CheckpointManager.checkpoint(Constants.NETWORK_PARAMETERS, checkpointsInputStream, blockStore, earliestKeyCreationTime);
+//					watch.stop();
+//					log.info("checkpoints loaded from '{}', took {}", Constants.Files.CHECKPOINTS_FILENAME, watch);
+//				}
+//				catch (final IOException x)
+//				{
+//					log.error("problem reading checkpoints, continuing without", x);
+//				}
+//			}
 		}
 		catch (final BlockStoreException x)
 		{
@@ -686,7 +701,7 @@ public class BlockchainServiceImpl extends android.app.Service implements Blockc
 				if (peerGroup != null)
 				{
 					log.info("broadcasting transaction " + tx.getHashAsString());
-					peerGroup.broadcastTransaction(tx);
+					peerGroup.broadcastTransaction(tx,1);
 				}
 				else
 				{

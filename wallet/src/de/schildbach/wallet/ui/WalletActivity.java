@@ -90,6 +90,7 @@ import de.schildbach.wallet.R;
 
 /**
  * @author Andreas Schildbach
+ * // Esta es la actividad de inicio de la app.
  */
 public final class WalletActivity extends AbstractWalletActivity implements ActivityCompat.OnRequestPermissionsResultCallback
 {
@@ -263,7 +264,8 @@ public final class WalletActivity extends AbstractWalletActivity implements Acti
 		final Resources res = getResources();
 		final String externalStorageState = Environment.getExternalStorageState();
 
-		menu.findItem(R.id.wallet_options_exchange_rates).setVisible(res.getBoolean(R.bool.show_exchange_rates_option));
+		// exchange rate commented, si quiero habilitarlo tengo que descomentar esto e ir al menu.xml
+//		menu.findItem(R.id.wallet_options_exchange_rates).setVisible(res.getBoolean(R.bool.show_exchange_rates_option));
 		menu.findItem(R.id.wallet_options_restore_wallet).setEnabled(
 				Environment.MEDIA_MOUNTED.equals(externalStorageState) || Environment.MEDIA_MOUNTED_READ_ONLY.equals(externalStorageState));
 		menu.findItem(R.id.wallet_options_backup_wallet).setEnabled(Environment.MEDIA_MOUNTED.equals(externalStorageState));
@@ -294,13 +296,13 @@ public final class WalletActivity extends AbstractWalletActivity implements Acti
 				AddressBookActivity.start(this);
 				return true;
 
-			case R.id.wallet_options_exchange_rates:
-				startActivity(new Intent(this, ExchangeRatesActivity.class));
-				return true;
+//			case R.id.wallet_options_exchange_rates:
+//				startActivity(new Intent(this, ExchangeRatesActivity.class));
+//				return true;
 
-			case R.id.wallet_options_sweep_wallet:
-				SweepWalletActivity.start(this);
-				return true;
+//			case R.id.wallet_options_sweep_wallet:
+//				SweepWalletActivity.start(this);
+//				return true;
 
 			case R.id.wallet_options_network_monitor:
 				startActivity(new Intent(this, NetworkMonitorActivity.class));
@@ -381,9 +383,10 @@ public final class WalletActivity extends AbstractWalletActivity implements Acti
 			return createRestoreWalletDialog();
 		else if (id == DIALOG_TIMESKEW_ALERT)
 			return createTimeskewAlertDialog(args.getLong("diff_minutes"));
-		else if (id == DIALOG_VERSION_ALERT)
+		else if (id == DIALOG_VERSION_ALERT) {
+			//dialog not available for the moment..
 			return createVersionAlertDialog();
-		else if (id == DIALOG_LOW_STORAGE_ALERT)
+		}else if (id == DIALOG_LOW_STORAGE_ALERT)
 			return createLowStorageAlertDialog();
 		else
 			throw new IllegalArgumentException();
@@ -628,19 +631,18 @@ public final class WalletActivity extends AbstractWalletActivity implements Acti
 					}
 				}
 
-				if (serverVersionCode > packageInfo.versionCode)
-				{
-					runOnUiThread(new Runnable()
-					{
-						@Override
-						public void run()
-						{
-							showDialog(DIALOG_VERSION_ALERT);
-						}
-					});
-
-					return;
-				}
+				// dialog no disponible por el momento..
+//				if (serverVersionCode > packageInfo.versionCode) {
+//					runOnUiThread(new Runnable()
+//					{
+//						@Override
+//						public void run() {
+//							showDialog(DIALOG_VERSION_ALERT);
+//						}
+//					});
+//
+//					return;
+//				}
 			}
 
 			@Override

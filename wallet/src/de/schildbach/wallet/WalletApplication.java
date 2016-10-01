@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.concurrent.TimeUnit;
 
+import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.VerificationException;
 import org.bitcoinj.core.VersionMessage;
@@ -36,6 +37,7 @@ import org.bitcoinj.wallet.UnreadableWalletException;
 import org.bitcoinj.wallet.Wallet;
 import org.bitcoinj.wallet.WalletFiles;
 import org.bitcoinj.wallet.WalletProtobufSerializer;
+import org.bitcoinj.wallet.listeners.WalletCoinsReceivedEventListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,6 +53,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
+import android.support.multidex.MultiDexApplication;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.format.DateUtils;
 import android.widget.Toast;
@@ -70,7 +73,7 @@ import de.schildbach.wallet.R;
 /**
  * @author Andreas Schildbach
  */
-public class WalletApplication extends Application
+public class WalletApplication extends MultiDexApplication
 {
 	private Configuration config;
 	private ActivityManager activityManager;
@@ -147,6 +150,20 @@ public class WalletApplication extends Application
 		afterLoadWallet();
 
 		cleanupFiles();
+
+		log.info("Wallet state: "+wallet);
+
+		wallet.addCoinsReceivedEventListener(new WalletCoinsReceivedEventListener() {
+			@Override
+			public void onCoinsReceived(Wallet wallet, Transaction transaction, Coin coin, Coin coin1) {
+				log.info("############  Start Coins received!!! ############################");
+				log.info("Coin: "+coin);
+				log.info("Transaction: "+transaction);
+				log.info("--------------------------------------------------");
+				log.info("wallet: "+wallet);
+				log.info("############   End Coin received!!! ############################");
+			}
+		});
 	}
 
 	private void afterLoadWallet()
