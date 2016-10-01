@@ -209,8 +209,7 @@ public class AddressBookProvider extends ContentProvider
 		}
 
 		@Override
-		public void onCreate(final SQLiteDatabase db)
-		{
+		public void onCreate(final SQLiteDatabase db) {
 			db.execSQL(DATABASE_CREATE);
 		}
 
