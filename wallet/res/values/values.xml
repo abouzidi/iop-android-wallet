@@ -7,6 +7,7 @@
 	<string name="app_name">IoP Wallet</string>
 	<string name="app_name_short">IoP Wallet</string>
 
+
 	<string-array name="preferences_precision_values">
 		<item>8</item>
 		<item>6</item>
