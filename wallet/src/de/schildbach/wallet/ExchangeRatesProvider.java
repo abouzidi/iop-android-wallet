@@ -22,6 +22,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Currency;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
@@ -60,6 +61,8 @@ import android.text.format.DateUtils;
 public class ExchangeRatesProvider extends ContentProvider {
 
 	public static final String AUTORITY = "de.schildbach.wallet.regtest";
+
+	public static final String IoP_TOKENS_VALUE = "12";
 
 	public static class ExchangeRate
 	{
@@ -158,15 +161,21 @@ public class ExchangeRatesProvider extends ContentProvider {
 		if (!offline && (lastUpdated == 0 || now - lastUpdated > UPDATE_FREQ_MS))
 		{
 			Map<String, ExchangeRate> newExchangeRates = null;
-			if (newExchangeRates == null)
-				newExchangeRates = requestExchangeRates(BITCOINAVERAGE_URL, userAgent, BITCOINAVERAGE_SOURCE, BITCOINAVERAGE_FIELDS);
-
+			if (newExchangeRates == null) {
+				//newExchangeRates = requestExchangeRates(BITCOINAVERAGE_URL, userAgent, BITCOINAVERAGE_SOURCE, BITCOINAVERAGE_FIELDS);
+				final Fiat rate = Fiat.parseFiat(Currency.getInstance(Locale.getDefault()).getCurrencyCode(), IoP_TOKENS_VALUE);
+				if (rate.signum() > 0) {
+					newExchangeRates = new HashMap<>();
+					newExchangeRates.put(Currency.getInstance(Locale.getDefault()).getCurrencyCode(), new ExchangeRate(new org.bitcoinj.utils.ExchangeRate(rate), "mati.com"));
+				}
+			}
 			if (newExchangeRates != null)
 			{
 				exchangeRates = newExchangeRates;
 				lastUpdated = now;
 
 				final ExchangeRate exchangeRateToCache = bestExchangeRate(config.getExchangeCurrencyCode());
+//				final ExchangeRate exchangeRateToCache =  new ExchangeRate(new org.bitcoinj.utils.ExchangeRate(Coin.valueOf(1,0), Fiat.valueOf(Currency.getInstance(Locale.getDefault()).getCurrencyCode(),12)), null);
 				if (exchangeRateToCache != null)
 					config.setCachedExchangeRate(exchangeRateToCache);
 			}

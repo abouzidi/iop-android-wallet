@@ -57,6 +57,8 @@ import org.bitcoinj.net.discovery.DnsDiscovery;
 import org.bitcoinj.net.discovery.MultiplexingDiscovery;
 import org.bitcoinj.net.discovery.PeerDiscovery;
 import org.bitcoinj.net.discovery.PeerDiscoveryException;
+import org.bitcoinj.params.RegTestParams;
+import org.bitcoinj.params.TestNet3Params;
 import org.bitcoinj.store.BlockStore;
 import org.bitcoinj.store.BlockStoreException;
 import org.bitcoinj.store.SPVBlockStore;
@@ -95,6 +97,7 @@ import de.schildbach.wallet.Constants;
 import de.schildbach.wallet.WalletApplication;
 import de.schildbach.wallet.WalletBalanceWidgetProvider;
 import de.schildbach.wallet.networks.RegtestUtil;
+import de.schildbach.wallet.networks.TestnetUtil;
 import de.schildbach.wallet.service.BlockchainState.Impediment;
 import de.schildbach.wallet.ui.WalletActivity;
 import de.schildbach.wallet.util.CrashReporter;
@@ -449,11 +452,17 @@ public class BlockchainServiceImpl extends android.app.Service implements Blockc
 //						normalPeerDiscovery.shutdown();
 //					}
 //				});
-//				peerGroup.addPeerDiscovery(new DnsDiscovery(Constants.NETWORK_PARAMETERS));
-
-				for (PeerAddress peerAddress : RegtestUtil.getConnectedPeers(Constants.NETWORK_PARAMETERS)) {
-					peerGroup.addAddress(peerAddress);
+				if(Constants.NETWORK_PARAMETERS.equals(TestNet3Params.get() )) {
+//					peerGroup.addPeerDiscovery(new DnsDiscovery(Constants.NETWORK_PARAMETERS));
+					for (PeerAddress peerAddress : TestnetUtil.getConnectedPeers(Constants.NETWORK_PARAMETERS)) {
+						peerGroup.addAddress(peerAddress);
+					}
+				} else if (Constants.NETWORK_PARAMETERS.equals(RegTestParams.get())) {
+					for (PeerAddress peerAddress : RegtestUtil.getConnectedPeers(Constants.NETWORK_PARAMETERS)) {
+						peerGroup.addAddress(peerAddress);
+					}
 				}
+
 
 				log.info("QQQQQ -PEnding peers- QQQQQQ\n peers: "+ Arrays.toString(peerGroup.getPendingPeers().toArray()));
 

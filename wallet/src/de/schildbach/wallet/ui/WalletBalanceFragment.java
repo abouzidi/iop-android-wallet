@@ -129,7 +129,8 @@ public final class WalletBalanceFragment extends Fragment
 				@Override
 				public void onClick(final View v)
 				{
-					startActivity(new Intent(getActivity(), ExchangeRatesActivity.class));
+					// exchange rates are not available
+					//startActivity(new Intent(getActivity(), ExchangeRatesActivity.class));
 				}
 			});
 		}

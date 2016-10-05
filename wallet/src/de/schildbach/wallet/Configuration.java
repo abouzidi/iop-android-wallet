@@ -32,6 +32,9 @@ import android.text.format.DateUtils;
 
 import com.google.common.base.Strings;
 
+import java.util.Currency;
+import java.util.Locale;
+
 import de.schildbach.wallet.ExchangeRatesProvider.ExchangeRate;
 import de.schildbach.wallet.regtest.R;
 
@@ -287,6 +290,7 @@ public class Configuration
 		{
 			return null;
 		}
+//		return new ExchangeRate(new org.bitcoinj.utils.ExchangeRate(Coin.valueOf(1,0), Fiat.valueOf(Currency.getInstance(Locale.getDefault()).getCurrencyCode(),12)), null);
 	}
 
 	public void setCachedExchangeRate(final ExchangeRate cachedExchangeRate)

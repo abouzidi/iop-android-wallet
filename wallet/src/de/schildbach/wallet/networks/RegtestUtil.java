@@ -15,7 +15,7 @@ import java.util.List;
 public class RegtestUtil {
 
 
-    private static final String LOCAL_PC = "192.168.0.111";
+    private static final String LOCAL_PC = "186.23.58.203";//"192.168.0.111";
 
     public static List<PeerAddress> getConnectedPeers(NetworkParameters params){
         if (!(params instanceof RegTestParams)) throw new IllegalArgumentException("NetworkParameters input is not a RegTestParams");
