@@ -3,11 +3,11 @@
   <string name="help_wallet">
 <![CDATA[
 		<p>
-			Horní levá strana obrazovky ukazuje dostupné prostředky v Bitcoinech a jednu vybranou národní měnu.
+			Horní levá strana obrazovky ukazuje dostupné prostředky v IoPech a jednu vybranou národní měnu.
 			Dotykem přejdete k seznamu národních měn, a ťuknutím na vybranou měnu ji zvolíte jako svou výchozí.
 		</p>
 		<p>
-			QR kód vpravo obsahuje vaši bitcoinovou adresu a může být naskenována plátcem.
+			QR kód vpravo obsahuje vaši IoPovou adresu a může být naskenována plátcem.
 			Dotyka na QR kód se zobrazí jeho zvětšená verze.
 		</p>
 		<p>
@@ -24,10 +24,10 @@
   <string name="help_request_coins">
 <![CDATA[
 		<p>
-			Pomocí tohoto dialogu můžete vyžádat Bitcoiny od někoho jiného (kdo by měl také mít nainstalovanou aplikaci Bitcoin Wallet).
+			Pomocí tohoto dialogu můžete vyžádat IoPy od někoho jiného (kdo by měl také mít nainstalovanou aplikaci IoP Wallet).
 		</p>
 		<p>
-			Nejprve zadejte množství Bitcoinů, které chcete vyžádat.
+			Nejprve zadejte množství IoPů, které chcete vyžádat.
 		</p>
 		<p>
 			Potom můžete protistraně nabídnout vygenerovaný QR kód k oskenování,
@@ -35,7 +35,7 @@
 			Druhá strana potom klikne na získanou adresu.
 		</p>
 		<p>
-			V obou případech odesílatel uvidí dialog na zasílání Bitcoinů s předvyplněnými údaji.
+			V obou případech odesílatel uvidí dialog na zasílání IoPů s předvyplněnými údaji.
 			Pokud souhlasí, potvrdí zadané informace a dojde k transakci.
 		</p>
 	]]>
@@ -43,7 +43,7 @@
   <string name="help_send_coins">
 <![CDATA[
 		<p>
-			Právě jste zahájili proces odeslání Bitcoinů.
+			Právě jste zahájili proces odeslání IoPů.
 			Sem jste se museli dostat buď přes hlavní obrazovku aplikace, nebo pomocí klepnutí na speciální adresu v prohlížeči.
 		</p>
 		<p>
@@ -52,7 +52,7 @@
 			Můžete také naskenovat QR kód s adresou nebo požadavkem na zaplacení, stisknutím tlačítka s ikonou QR kódu.
 		</p>
 		<p>
-			V dalším kroku uvidíte, kolik Bitcoinů můžete momentálně utratit.
+			V dalším kroku uvidíte, kolik IoPů můžete momentálně utratit.
 			Jakýkoliv rozdíl vůči zůstatku zobrazenému na výchozí obrazovce je stále nepotvrzen a tudíž nemůže být utracen.
 		</p>
 		<p>
@@ -60,7 +60,7 @@
 		</p>
 		<p>
 			Transakce můžete provádět, i když jste právě offline.
-			Budou provedeny při dalším spuštění aplikace Bitcoin Wallet.
+			Budou provedeny při dalším spuštění aplikace IoP Wallet.
 			Pokud chcete transakci provést co nejrychleji, ujistěte se, že máte dobré připojení (například pomocí bezdrátové sítě wifi).
 		</p>
 		<p>
@@ -76,8 +76,8 @@
 			<b>Několik slov o bezpečnosti:</b>
 		</p>
 		<p>
-			Vaše Bitcoiny jsou uloženy přímo v tomto zařízení.
-			<b>Pokud o zařízení přijdete, ztratíte i Bitcoiny v něm.</b>
+			Vaše IoPy jsou uloženy přímo v tomto zařízení.
+			<b>Pokud o zařízení přijdete, ztratíte i IoPy v něm.</b>
 			Stejně jako při ztrátě normální peněženky.
 		</p>
 		<p>
@@ -86,18 +86,18 @@
 			Poté udržujte svou zálohu na bezpečném místě a pamatujte si heslo.
 		</p>
 		<p>
-			<b>Před odinstalací aplikace Bitcoin Wallet</b> (nebo při mazání dat aplikace/přístroje), <b>si přepošlete zůstatek do jiné peněženky</b>.
+			<b>Před odinstalací aplikace IoP Wallet</b> (nebo při mazání dat aplikace/přístroje), <b>si přepošlete zůstatek do jiné peněženky</b>.
 			Jakékoliv zbylé neodeslané Bitcony budou ztraceny.
 		</p>
 		<p>
 			<b>Provedené platby jsou nezvratné</b>.
-			Pokud pošlete Bitcoiny na špatnou adresu, možnost jejich získání zpět téměř neexistue.
+			Pokud pošlete IoPy na špatnou adresu, možnost jejich získání zpět téměř neexistue.
 		</p>
 		<p>
 			<b>Udržujte svůj systém Android v bezpečí!</b>
 			Nepřivlastňujte si práva root svého přístoje.
 			Instalujte pouze aplikace, kterým plně důvěřujete.
-			Škodlivé aplikace se mohou pokoušet o ukradení Bitcoinů z peněženky.
+			Škodlivé aplikace se mohou pokoušet o ukradení IoPů z peněženky.
 		</p>
 		<p>
 			Neriskujte zbytečně!

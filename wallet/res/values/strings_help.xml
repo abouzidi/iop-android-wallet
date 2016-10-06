@@ -4,7 +4,7 @@
 	<string name="help_wallet">
 <![CDATA[
 		<p>
-			The upper left part of the screen displays your balance in Bitcoins and one selected national currency.
+			The upper left part of the screen displays your balance in IoPs and one selected national currency.
 			Tap to go to the list of national currencies, and tap on one of the currencies to select it as default.
 		</p>
 		<p>
@@ -28,7 +28,7 @@
 			Using this dialog, you can request coins from another person (who should already have installed Bitcoin Wallet).
 		</p>
 		<p>
-			First, you can enter an amount of Bitcoins to request.
+			First, you can enter an amount of IoPs to request.
 		</p>
 		<p>
 			Then, you either have the generated QR code scanned by the other person.
@@ -53,7 +53,7 @@
 			You can also scan QR codes with Bitcoin addresses or Bitcoin requests by pressing the QR button in the action bar.
 		</p>
 		<p>
-			Next, you can see how many Bitcoins you can spend at the moment.
+			Next, you can see how many IoPs you can spend at the moment.
 			Any difference to the balance from the main screen is still unconfirmed and can thus not yet be spent.
 		</p>
 		<p>
@@ -77,8 +77,8 @@
 			<b>Important safety notes:</b>
 		</p>
 		<p>
-			Bitcoins are stored on the device.
-			<b>If you lose it, you\'ll lose your Bitcoins.</b>
+			IoPs are stored on the device.
+			<b>If you lose it, you\'ll lose your IoPs.</b>
 		</p>
 		<p>
 			This means you need to <b>back up your wallet</b>!
@@ -86,12 +86,12 @@
 			Keep your backup safe and remember the password.
 		</p>
 		<p>
-			<b>Before uninstalling</b> (or clearing app data/wiping your device), <b>transfer your Bitcoins to another wallet</b>.
-			Remaining Bitcoins will be lost.
+			<b>Before uninstalling</b> (or clearing app data/wiping your device), <b>transfer your IoPs to another wallet</b>.
+			Remaining IoPs will be lost.
 		</p>
 		<p>
 			<b>Payments are irreversible</b>.
-			If you send your Bitcoins into the void, there is almost no way to get them back.
+			If you send your IoPs into the void, there is almost no way to get them back.
 		</p>
 		<p>
 			<b>Keep your mobile device safe!</b>

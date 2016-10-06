@@ -28,7 +28,7 @@
   <string name="wallet_transactions_options_filter_sent">Alimtuma</string>
   <string name="wallet_transactions_fragment_empty_text_received">Hakuna Bitcoin kupokea hivyo mbali</string>
   <string name="wallet_transactions_fragment_empty_text_sent">Hakuna Bitcoin kutumwa hivyo mbali</string>
-  <string name="wallet_transactions_fragment_empty_text_howto">Jinsi ya bamba Bitcoins? Nunua na pesa ya kawaida, na biashara, na kazi.</string>
+  <string name="wallet_transactions_fragment_empty_text_howto">Jinsi ya bamba IoPs? Nunua na pesa ya kawaida, na biashara, na kazi.</string>
   <string name="wallet_transactions_row_warning_backup">Pongezi budha! Wewe kupokea pesa yako ya kwanza! Lazima kubamba backup, Huna wanataka kupata kuiba.</string>
   <string name="wallet_transactions_fragment_coinbase">kupatikana</string>
   <string name="wallet_transactions_fragment_internal">ndani</string>

@@ -3,11 +3,11 @@
   <string name="help_wallet">
 <![CDATA[
 		<p>
-			La partie supérieure gauche de l\'écran affiche votre solde en bitcoins ainsi qu\'une monnaie nationale choisie.
+			La partie supérieure gauche de l\'écran affiche votre solde en IoPs ainsi qu\'une monnaie nationale choisie.
 			Toquer pour vous rendre vers la liste des monnaies nationales et toquer sur l\'une d\'elles pour la choisir par défaut.
 		</p>
 		<p>
-			Le QR code à droite contient votre adresse Bitcoin et peut être numérisé par un tiers.
+			Le QR code à droite contient votre adresse IoP et peut être numérisé par un tiers.
 			Toquer sur le code QR pour l\'agrandir.
 		</p>
 		<p>
@@ -16,7 +16,7 @@
 			Toquer sur une transaction pour ajouter l\'adresse du destinataire ou de l\'envoyeur à votre carnet d\'adresses.
 		</p>
 		<p>
-			Vous pouvez envoyer ou recevoir des bitcoins en toquant les boutons dans la barre d\'action.
+			Vous pouvez envoyer ou recevoir des IoPs en toquant les boutons dans la barre d\'action.
 			Plus d\'options sont offertes dans le menu des options.
 		</p>
 	]]>
@@ -24,15 +24,15 @@
   <string name="help_request_coins">
 <![CDATA[
 		<p>
-			En utilisant cette zone de dialogue vous pouvez demander des pièces à une autre personne (qui devrait déjà avoir installé le Bitcoin Wallet).
+			En utilisant cette zone de dialogue vous pouvez demander des pièces à une autre personne (qui devrait déjà avoir installé le IoP Wallet).
 		</p>
 		<p>
-			Vous pouvez d\'abord saisir un montant de bitcoins à demander.
+			Vous pouvez d\'abord saisir un montant de IoPs à demander.
 		</p>
 		<p>
 			Ensuite, l\'autre personne peut numériser le code QR généré.
 			Vous pouvez aussi envoyer votre demande à une personne éloignée avec le bouton Partager de la barre de menu.
-			L\'autre personne devra cliquer sur l\'URL Bitcoin.
+			L\'autre personne devra cliquer sur l\'URL IoP.
 		</p>
 		<p>
 			Dans les deux cas, l\'autre personne obtiendra une zone de dialogue préremplie pour envoyer les pièces.
@@ -43,16 +43,16 @@
   <string name="help_send_coins">
 <![CDATA[
 		<p>
-			Vous avez commencé le processus d\'envoi de bitcoins.
-			Vous êtes arrivé ici depuis l\'écran principal ou en cliquant sur une URL Bitcoin dans votre navigateur.
+			Vous avez commencé le processus d\'envoi de IoPs.
+			Vous êtes arrivé ici depuis l\'écran principal ou en cliquant sur une URL IoP dans votre navigateur.
 		</p>
 		<p>
-			D\'abord, saisir l\'adresse Bitcoin de destination.
+			D\'abord, saisir l\'adresse IoP de destination.
 			L\'adresse sera complétée automatiquement pour les adresses enregistrées dans votre carnet.
-			Vous pouvez aussi numériser des codes QR avec des adresses Bitcoin ou des demandes de bitcoins en pressant le bouton QR dans la barre d\'actions.
+			Vous pouvez aussi numériser des codes QR avec des adresses IoP ou des demandes de IoPs en pressant le bouton QR dans la barre d\'actions.
 		</p>
 		<p>
-			Ensuite, vous pouvez voir combien de bitcoins peuvent être dépensés actuellement.
+			Ensuite, vous pouvez voir combien de IoPs peuvent être dépensés actuellement.
 			Tout écart avec le solde de l\'écran principal n\'est pas encore confirmé et ne peut donc pas être dépensé.
 		</p>
 		<p>
@@ -60,7 +60,7 @@
 		</p>
 		<p>
 			Vous pouvez saisir un paiement hors-ligne.
-			Il sera envoyé au prochain lancement du Bitcoin Wallet.
+			Il sera envoyé au prochain lancement du IoP Wallet.
 			Pour le traitement le plus rapide possible de votre paiement, assurez vous d\'être bien connecté (c.-à-d. sur un WLAN).
 		</p>
 		<p>
@@ -76,8 +76,8 @@
 			<b>Notes de sécurité importantes :</b>
 		</p>
 		<p>
-			Les bitcoins sont stockés sur l\'appareil.
-			<b>Si vous le perdez, vous perdez vos bitcoins.</b>
+			Les IoPs sont stockés sur l\'appareil.
+			<b>Si vous le perdez, vous perdez vos IoPs.</b>
 		</p>
 		<p>
 			Cela signifie que vous devez <b>sauvegarder votre porte-monnaie</b> !
@@ -85,12 +85,12 @@
 			Gardez votre sauvegarde en sûreté et souvenez-vous de votre mot de passe.
 		</p>
 		<p>
-			<b>Avant de désinstaller Bitcoin Wallet</b> (ou d\'effacer les données de l\'appli/effacer les données de votre appareil), <b>transférez vos bitcoins vers un autre porte-monnaie</b>.
-			Les bitcoins restants seront perdus.
+			<b>Avant de désinstaller IoP Wallet</b> (ou d\'effacer les données de l\'appli/effacer les données de votre appareil), <b>transférez vos IoPs vers un autre porte-monnaie</b>.
+			Les IoPs restants seront perdus.
 		</p>
 		<p>
 			<b>Les paiements sont irréversibles</b>.
-			Si vous envoyez vos bitcoins dans le vide, il n\'y a presque aucun moyen de les récupérer.
+			Si vous envoyez vos IoPs dans le vide, il n\'y a presque aucun moyen de les récupérer.
 		</p>
 		<p>
 			<b>Assurez la sécurité de votre appareil mobile !</b>

@@ -223,11 +223,11 @@
   <string name="preferences_category_labs">Лаборатория</string>
   <string name="preferences_precision_title">Деноминация и точность</string>
   <string name="preferences_precision_summary">Единицы, в которых отображаются суммы. Не влияет на вычисления.</string>
-  <string name="preferences_precision_labels_8">BTC, 8 десятичных разрядов</string>
-  <string name="preferences_precision_labels_6">BTC, 6 десятичных разрядов</string>
-  <string name="preferences_precision_labels_4">BTC, 4 десятичных разряда</string>
-  <string name="preferences_precision_labels_2_3">mBTC, 2 десятичных разряда</string>
-  <string name="preferences_precision_labels_0_6">µBTC, без десятичных разрядов</string>
+  <string name="preferences_precision_labels_8">IoP, 8 десятичных разрядов</string>
+  <string name="preferences_precision_labels_6">IoP, 6 десятичных разрядов</string>
+  <string name="preferences_precision_labels_4">IoP, 4 десятичных разряда</string>
+  <string name="preferences_precision_labels_2_3">mIoP, 2 десятичных разряда</string>
+  <string name="preferences_precision_labels_0_6">µIoP, без десятичных разрядов</string>
   <string name="preferences_own_name_title">Собственное название</string>
   <string name="preferences_own_name_summary">Ваше имя для добавления в запросы платежей. Желательно, покороче.</string>
   <string name="preferences_connectivity_notification_title">Индикатор подключения</string>

@@ -12,7 +12,7 @@
 	<string name="blockchain_state_progress_stalled">Synchronizacja wstrzymana</string>
 	<string name="blockchain_state_progress_problem_storage">Synchronizowanie: Problem z pamięcią</string>
 	<string name="blockchain_state_progress_problem_network">Synchronizowanie: Problem z siecią</string>
-	<string name="wallet_address_fragment_clipboard_msg">Adres Bitcoin skopiowano do schowka</string>
+	<string name="wallet_address_fragment_clipboard_msg">Adres IoP skopiowano do schowka</string>
 	<string name="wallet_balance_fragment_replaying">Saldo nie jest dostępne w trakcie odtwarzania.</string>
 	<string name="exchange_rates_activity_title">Kursy wymiany walut</string>
 	<string name="exchange_rates_fragment_empty_text">Załadowanie kursu wymiany walut nie powiodło się</string>
@@ -24,7 +24,7 @@
 	<string name="wallet_transactions_options_filter_received">Otrzymane</string>
 	<string name="wallet_transactions_options_filter_all">Wszystkie</string>
 	<string name="wallet_transactions_options_filter_sent">Wysłane</string>
-	<string name="wallet_transactions_fragment_empty_text_received">Nie otrzymano jeszcze żadnych Bitcoinów.</string>
+	<string name="wallet_transactions_fragment_empty_text_received">Nie otrzymano jeszcze żadnych IoPów.</string>
 	<string name="wallet_transactions_fragment_empty_text_sent">Nie wysłano jeszcze żadnych Bitcoinów.</string>
 	<string name="wallet_transactions_fragment_empty_text_howto">Jak zdobyć Bitcoiny?\n\nWymień za tradycyjną walutę,\nsprzedawaj dobra bądź usługi lub\nzarabiaj pracując.</string>
 	<string name="wallet_transactions_row_warning_backup">Gratulacje, otrzymałeś swoją pierwszą płatność! Czy już &lt;u&gt;wykonałeś kopię zapasową swojego portfela&lt;/u&gt;, by ochronić się przed jej utratą?</string>
