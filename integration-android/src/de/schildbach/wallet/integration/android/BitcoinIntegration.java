@@ -35,12 +35,12 @@ public final class BitcoinIntegration
 	private static final String MIMETYPE_PAYMENTREQUEST = "application/bitcoin-paymentrequest"; // BIP 71
 
 	/**
-	 * Request any amount of Bitcoins (probably a donation) from user, without feedback from the app.
+	 * Request any amount of IoPs (probably a donation) from user, without feedback from the app.
 	 * 
 	 * @param context
 	 *            Android context
 	 * @param address
-	 *            Bitcoin address
+	 *            IoP address
 	 */
 	public static void request(final Context context, final String address)
 	{
@@ -50,7 +50,7 @@ public final class BitcoinIntegration
 	}
 
 	/**
-	 * Request specific amount of Bitcoins from user, without feedback from the app.
+	 * Request specific amount of IoPs from user, without feedback from the app.
 	 * 
 	 * @param context
 	 *            Android context
@@ -82,7 +82,7 @@ public final class BitcoinIntegration
 	}
 
 	/**
-	 * Request any amount of Bitcoins (probably a donation) from user, with feedback from the app. Result intent can be
+	 * Request any amount of IoPs (probably a donation) from user, with feedback from the app. Result intent can be
 	 * received by overriding {@link android.app.Activity#onActivityResult()}. Result indicates either
 	 * {@link Activity#RESULT_OK} or {@link Activity#RESULT_CANCELED}. In the success case, use
 	 * {@link #transactionHashFromResult(Intent)} to read the transaction hash from the intent.
@@ -95,7 +95,7 @@ public final class BitcoinIntegration
 	 * @param requestCode
 	 *            Code identifying the call when {@link android.app.Activity#onActivityResult()} is called back
 	 * @param address
-	 *            Bitcoin address
+	 *            IoP address
 	 */
 	public static void requestForResult(final Activity activity, final int requestCode, final String address)
 	{
@@ -105,7 +105,7 @@ public final class BitcoinIntegration
 	}
 
 	/**
-	 * Request specific amount of Bitcoins from user, with feedback from the app. Result intent can be received by
+	 * Request specific amount of IoPs from user, with feedback from the app. Result intent can be received by
 	 * overriding {@link android.app.Activity#onActivityResult()}. Result indicates either {@link Activity#RESULT_OK} or
 	 * {@link Activity#RESULT_CANCELED}. In the success case, use {@link #transactionHashFromResult(Intent)} to read the
 	 * transaction hash from the intent.
@@ -269,7 +269,7 @@ public final class BitcoinIntegration
 
 	private static void redirectToDownload(final Context context)
 	{
-		Toast.makeText(context, "No Bitcoin application found.\nPlease install Bitcoin Wallet.", Toast.LENGTH_LONG).show();
+		Toast.makeText(context, "No IoP application found.\nPlease install IoP Wallet.", Toast.LENGTH_LONG).show();
 
 		final Intent marketIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=de.schildbach.wallet"));
 		final Intent binaryIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/bitcoin-wallet/bitcoin-wallet/releases"));

@@ -676,15 +676,15 @@ public final class SendCoinsFragment extends Fragment
 
 		amountGroup = view.findViewById(R.id.send_coins_amount_group);
 
-		final CurrencyAmountView btcAmountView = (CurrencyAmountView) view.findViewById(R.id.send_coins_amount_btc);
-		btcAmountView.setCurrencySymbol(config.getFormat().code());
-		btcAmountView.setInputFormat(config.getMaxPrecisionFormat());
-		btcAmountView.setHintFormat(config.getFormat());
+		final CurrencyAmountView IoPAmountView = (CurrencyAmountView) view.findViewById(R.id.send_coins_amount_IoP);
+		IoPAmountView.setCurrencySymbol(config.getFormat().code());
+		IoPAmountView.setInputFormat(config.getMaxPrecisionFormat());
+		IoPAmountView.setHintFormat(config.getFormat());
 
 		final CurrencyAmountView localAmountView = (CurrencyAmountView) view.findViewById(R.id.send_coins_amount_local);
 		localAmountView.setInputFormat(Constants.LOCAL_FORMAT);
 		localAmountView.setHintFormat(Constants.LOCAL_FORMAT);
-		amountCalculatorLink = new CurrencyCalculatorLink(btcAmountView, localAmountView);
+		amountCalculatorLink = new CurrencyCalculatorLink(IoPAmountView, localAmountView);
 		amountCalculatorLink.setExchangeDirection(config.getLastExchangeDirection());
 
 		directPaymentEnableView = (CheckBox) view.findViewById(R.id.send_coins_direct_payment_enable);
@@ -1165,14 +1165,14 @@ public final class SendCoinsFragment extends Fragment
 				final Coin available = wallet.getBalance(BalanceType.AVAILABLE);
 				final Coin pending = estimated.subtract(available);
 
-				final MonetaryFormat btcFormat = config.getFormat();
+				final MonetaryFormat IoPFormat = config.getFormat();
 
 				final DialogBuilder dialog = DialogBuilder.warn(activity, R.string.send_coins_fragment_insufficient_money_title);
 				final StringBuilder msg = new StringBuilder();
-				msg.append(getString(R.string.send_coins_fragment_insufficient_money_msg1, btcFormat.format(missing)));
+				msg.append(getString(R.string.send_coins_fragment_insufficient_money_msg1, IoPFormat.format(missing)));
 
 				if (pending.signum() > 0)
-					msg.append("\n\n").append(getString(R.string.send_coins_fragment_pending, btcFormat.format(pending)));
+					msg.append("\n\n").append(getString(R.string.send_coins_fragment_pending, IoPFormat.format(pending)));
 				if (paymentIntent.mayEditAmount())
 					msg.append("\n\n").append(getString(R.string.send_coins_fragment_insufficient_money_msg2));
 				dialog.setMessage(msg);
@@ -1244,7 +1244,7 @@ public final class SendCoinsFragment extends Fragment
 	private void handleEmpty()
 	{
 		final Coin available = wallet.getBalance(BalanceType.AVAILABLE);
-		amountCalculatorLink.setBtcAmount(available);
+		amountCalculatorLink.setIoPAmount(available);
 
 		updateView();
 		handler.post(dryrunRunnable);
@@ -1302,7 +1302,7 @@ public final class SendCoinsFragment extends Fragment
 
 		if (paymentIntent != null)
 		{
-			final MonetaryFormat btcFormat = config.getFormat();
+			final MonetaryFormat IoPFormat = config.getFormat();
 
 			getView().setVisibility(View.VISIBLE);
 
@@ -1405,7 +1405,7 @@ public final class SendCoinsFragment extends Fragment
 						hintView.setText(getString(R.string.send_coins_fragment_hint_dusty_send));
 					else if (dryrunException instanceof InsufficientMoneyException)
 						hintView.setText(getString(R.string.send_coins_fragment_hint_insufficient_money,
-								btcFormat.format(((InsufficientMoneyException) dryrunException).missing)));
+								IoPFormat.format(((InsufficientMoneyException) dryrunException).missing)));
 					else if (dryrunException instanceof CouldNotAdjustDownwards)
 						hintView.setText(getString(R.string.send_coins_fragment_hint_empty_wallet_failed));
 					else
@@ -1415,7 +1415,7 @@ public final class SendCoinsFragment extends Fragment
 				{
 					hintView.setTextColor(getResources().getColor(R.color.fg_insignificant));
 					hintView.setVisibility(View.VISIBLE);
-					hintView.setText(getString(R.string.send_coins_fragment_hint_fee, btcFormat.format(dryrunTransaction.getFee())));
+					hintView.setText(getString(R.string.send_coins_fragment_hint_fee, IoPFormat.format(dryrunTransaction.getFee())));
 				}
 				else if (paymentIntent.mayEditAddress() && validatedAddress != null && wallet.isPubKeyHashMine(validatedAddress.address.getHash160()))
 				{
@@ -1428,7 +1428,7 @@ public final class SendCoinsFragment extends Fragment
 			if (sentTransaction != null)
 			{
 				sentTransactionView.setVisibility(View.VISIBLE);
-				sentTransactionAdapter.setFormat(btcFormat);
+				sentTransactionAdapter.setFormat(IoPFormat);
 				sentTransactionAdapter.replace(sentTransaction);
 				sentTransactionAdapter.bindViewHolder(sentTransactionViewHolder, 0);
 			}
@@ -1630,7 +1630,7 @@ public final class SendCoinsFragment extends Fragment
 					setState(State.INPUT);
 
 					receivingAddressView.setText(null);
-					amountCalculatorLink.setBtcAmount(paymentIntent.getAmount());
+					amountCalculatorLink.setIoPAmount(paymentIntent.getAmount());
 
 					if (paymentIntent.isBluetoothPaymentUrl())
 						directPaymentEnableView.setChecked(bluetoothAdapter != null && bluetoothAdapter.isEnabled());

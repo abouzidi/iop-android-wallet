@@ -106,9 +106,9 @@ public final class InactivityNotificationService extends IntentService
 			final Coin availableBalance = wallet.getBalance(BalanceType.AVAILABLE_SPENDABLE);
 			final boolean canDonate = Constants.DONATION_ADDRESS != null && availableBalance.isPositive();
 
-			final MonetaryFormat btcFormat = config.getFormat();
+			final MonetaryFormat IoPFormat = config.getFormat();
 			final String title = getString(R.string.notification_inactivity_title);
-			final StringBuilder text = new StringBuilder(getString(R.string.notification_inactivity_message, btcFormat.format(estimatedBalance)));
+			final StringBuilder text = new StringBuilder(getString(R.string.notification_inactivity_message, IoPFormat.format(estimatedBalance)));
 			if (canDonate)
 				text.append("\n\n").append(getString(R.string.notification_inactivity_message_donate));
 

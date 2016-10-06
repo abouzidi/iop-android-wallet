@@ -198,4 +198,4 @@ SWEEPING WALLETS
 For sweeping wallets, Bitcoin Wallet uses an API by biteasy to query for unspent transaction
 outputs:
 
-	https://api.biteasy.com/v2/btc/mainnet/outputs
+	https://api.biteasy.com/v2/IoP/mainnet/outputs

@@ -20,9 +20,14 @@ public class TestnetUtil {
         if (!(params instanceof TestNet3Params)) throw new IllegalArgumentException("NetworkParameters input is not a RegTestParams");
         List<PeerAddress> list = new ArrayList<>();
         // peers
-        list.add(new PeerAddress(params,new InetSocketAddress("186.23.58.203",7475)));
-        list.add(new PeerAddress(params,new InetSocketAddress("52.43.229.240",7475)));
-        list.add(new PeerAddress(params,new InetSocketAddress("181.169.84.146",7475)));
+//        list.add(new PeerAddress(params,new InetSocketAddress("186.23.58.203",7475)));
+//        list.add(new PeerAddress(params,new InetSocketAddress("52.43.229.240",7475)));
+//        list.add(new PeerAddress(params,new InetSocketAddress("181.169.84.146",7475)));
+        list.add(new PeerAddress(params,new InetSocketAddress("ham4.fermat.cloud",7475)));
+        list.add(new PeerAddress(params,new InetSocketAddress("ham5.fermat.cloud",7475)));
+        list.add(new PeerAddress(params,new InetSocketAddress("ham6.fermat.cloud",7475)));
+//        list.add(new PeerAddress(params,new InetSocketAddress("ham7.fermat.cloud",7475)));
+        list.add(new PeerAddress(params,new InetSocketAddress("ham8.fermat.cloud",7475)));
         return list;
     }
 

@@ -33,7 +33,7 @@ import de.schildbach.wallet.ui.CurrencyAmountView.Listener;
  */
 public final class CurrencyCalculatorLink
 {
-	private final CurrencyAmountView btcAmountView;
+	private final CurrencyAmountView IoPAmountView;
 	private final CurrencyAmountView localAmountView;
 
 	private Listener listener = null;
@@ -41,12 +41,12 @@ public final class CurrencyCalculatorLink
 	private ExchangeRate exchangeRate = null;
 	private boolean exchangeDirection = true;
 
-	private final CurrencyAmountView.Listener btcAmountViewListener = new CurrencyAmountView.Listener()
+	private final CurrencyAmountView.Listener IoPAmountViewListener = new CurrencyAmountView.Listener()
 	{
 		@Override
 		public void changed()
 		{
-			if (btcAmountView.getAmount() != null)
+			if (IoPAmountView.getAmount() != null)
 				setExchangeDirection(true);
 			else
 				localAmountView.setHint(null);
@@ -71,7 +71,7 @@ public final class CurrencyCalculatorLink
 			if (localAmountView.getAmount() != null)
 				setExchangeDirection(false);
 			else
-				btcAmountView.setHint(null);
+				IoPAmountView.setHint(null);
 
 			if (listener != null)
 				listener.changed();
@@ -85,10 +85,10 @@ public final class CurrencyCalculatorLink
 		}
 	};
 
-	public CurrencyCalculatorLink(final CurrencyAmountView btcAmountView, final CurrencyAmountView localAmountView)
+	public CurrencyCalculatorLink(final CurrencyAmountView IoPAmountView, final CurrencyAmountView localAmountView)
 	{
-		this.btcAmountView = btcAmountView;
-		this.btcAmountView.setListener(btcAmountViewListener);
+		this.IoPAmountView = IoPAmountView;
+		this.IoPAmountView.setListener(IoPAmountViewListener);
 
 		this.localAmountView = localAmountView;
 		this.localAmountView.setListener(localAmountViewListener);
@@ -125,7 +125,7 @@ public final class CurrencyCalculatorLink
 	{
 		if (exchangeDirection)
 		{
-			return (Coin) btcAmountView.getAmount();
+			return (Coin) IoPAmountView.getAmount();
 		}
 		else if (exchangeRate != null)
 		{
@@ -134,10 +134,10 @@ public final class CurrencyCalculatorLink
 				return null;
 			try
 			{
-				final Coin btcAmount = exchangeRate.fiatToCoin(localAmount);
-				if (((Coin) btcAmount).isGreaterThan(Constants.NETWORK_PARAMETERS.getMaxMoney()))
+				final Coin IoPAmount = exchangeRate.fiatToCoin(localAmount);
+				if (((Coin) IoPAmount).isGreaterThan(Constants.NETWORK_PARAMETERS.getMaxMoney()))
 					throw new ArithmeticException();
-				return btcAmount;
+				return IoPAmount;
 			}
 			catch (ArithmeticException x)
 			{
@@ -157,7 +157,7 @@ public final class CurrencyCalculatorLink
 
 	private void update()
 	{
-		btcAmountView.setEnabled(enabled);
+		IoPAmountView.setEnabled(enabled);
 
 		if (exchangeRate != null)
 		{
@@ -166,12 +166,12 @@ public final class CurrencyCalculatorLink
 
 			if (exchangeDirection)
 			{
-				final Coin btcAmount = (Coin) btcAmountView.getAmount();
-				if (btcAmount != null)
+				final Coin IoPAmount = (Coin) IoPAmountView.getAmount();
+				if (IoPAmount != null)
 				{
 					localAmountView.setAmount(null, false);
-					localAmountView.setHint(exchangeRate.coinToFiat(btcAmount));
-					btcAmountView.setHint(null);
+					localAmountView.setHint(exchangeRate.coinToFiat(IoPAmount));
+					IoPAmountView.setHint(null);
 				}
 			}
 			else
@@ -180,17 +180,17 @@ public final class CurrencyCalculatorLink
 				if (localAmount != null)
 				{
 					localAmountView.setHint(null);
-					btcAmountView.setAmount(null, false);
+					IoPAmountView.setAmount(null, false);
 					try
 					{
-						final Coin btcAmount = exchangeRate.fiatToCoin(localAmount);
-						if (((Coin) btcAmount).isGreaterThan(Constants.NETWORK_PARAMETERS.getMaxMoney()))
+						final Coin IoPAmount = exchangeRate.fiatToCoin(localAmount);
+						if (((Coin) IoPAmount).isGreaterThan(Constants.NETWORK_PARAMETERS.getMaxMoney()))
 							throw new ArithmeticException();
-						btcAmountView.setHint(btcAmount);
+						IoPAmountView.setHint(IoPAmount);
 					}
 					catch (final ArithmeticException x)
 					{
-						btcAmountView.setHint(null);
+						IoPAmountView.setHint(null);
 					}
 				}
 			}
@@ -199,7 +199,7 @@ public final class CurrencyCalculatorLink
 		{
 			localAmountView.setEnabled(false);
 			localAmountView.setHint(null);
-			btcAmountView.setHint(null);
+			IoPAmountView.setHint(null);
 		}
 	}
 
@@ -218,7 +218,7 @@ public final class CurrencyCalculatorLink
 	public View activeTextView()
 	{
 		if (exchangeDirection)
-			return btcAmountView.getTextView();
+			return IoPAmountView.getTextView();
 		else
 			return localAmountView.getTextView();
 	}
@@ -228,19 +228,19 @@ public final class CurrencyCalculatorLink
 		activeTextView().requestFocus();
 	}
 
-	public void setBtcAmount(final Coin amount)
+	public void setIoPAmount(final Coin amount)
 	{
 		final Listener listener = this.listener;
 		this.listener = null;
 
-		btcAmountView.setAmount(amount, true);
+		IoPAmountView.setAmount(amount, true);
 
 		this.listener = listener;
 	}
 
 	public void setNextFocusId(final int nextFocusId)
 	{
-		btcAmountView.setNextFocusId(nextFocusId);
+		IoPAmountView.setNextFocusId(nextFocusId);
 		localAmountView.setNextFocusId(nextFocusId);
 	}
 }

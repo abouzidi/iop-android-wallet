@@ -522,12 +522,12 @@ public class SweepWalletFragment extends Fragment
 
 	private void updateView()
 	{
-		final MonetaryFormat btcFormat = config.getFormat();
+		final MonetaryFormat IoPFormat = config.getFormat();
 
 		if (walletToSweep != null)
 		{
 			balanceView.setVisibility(View.VISIBLE);
-			final MonetarySpannable balanceSpannable = new MonetarySpannable(btcFormat, walletToSweep.getBalance(BalanceType.ESTIMATED));
+			final MonetarySpannable balanceSpannable = new MonetarySpannable(IoPFormat, walletToSweep.getBalance(BalanceType.ESTIMATED));
 			balanceSpannable.applyMarkup(null, null);
 			final SpannableStringBuilder balance = new SpannableStringBuilder(balanceSpannable);
 			balance.insert(0, ": ");
@@ -561,7 +561,7 @@ public class SweepWalletFragment extends Fragment
 		if (sentTransaction != null)
 		{
 			sweepTransactionView.setVisibility(View.VISIBLE);
-			sweepTransactionAdapter.setFormat(btcFormat);
+			sweepTransactionAdapter.setFormat(IoPFormat);
 			sweepTransactionAdapter.replace(sentTransaction);
 			sweepTransactionAdapter.bindViewHolder(sweepTransactionViewHolder, 0);
 		}

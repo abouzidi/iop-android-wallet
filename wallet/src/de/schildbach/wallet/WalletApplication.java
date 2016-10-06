@@ -41,6 +41,7 @@ import org.bitcoinj.wallet.listeners.WalletCoinsReceivedEventListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.github.anrwatchdog.ANRWatchDog;
 import com.google.common.base.Stopwatch;
 
 import android.app.ActivityManager;
@@ -153,17 +154,7 @@ public class WalletApplication extends MultiDexApplication
 
 		log.info("Wallet state: "+wallet);
 
-		wallet.addCoinsReceivedEventListener(new WalletCoinsReceivedEventListener() {
-			@Override
-			public void onCoinsReceived(Wallet wallet, Transaction transaction, Coin coin, Coin coin1) {
-				log.info("############  Start Coins received!!! ############################");
-				log.info("Coin: "+coin);
-				log.info("Transaction: "+transaction);
-				log.info("--------------------------------------------------");
-				log.info("wallet: "+wallet);
-				log.info("############   End Coin received!!! ############################");
-			}
-		});
+		new ANRWatchDog().start();
 	}
 
 	private void afterLoadWallet()

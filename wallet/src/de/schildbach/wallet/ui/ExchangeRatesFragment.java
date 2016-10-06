@@ -238,7 +238,7 @@ public final class ExchangeRatesFragment extends FancyListFragment implements On
 	@Override
 	public void onSharedPreferenceChanged(final SharedPreferences sharedPreferences, final String key)
 	{
-		if (Configuration.PREFS_KEY_EXCHANGE_CURRENCY.equals(key) || Configuration.PREFS_KEY_BTC_PRECISION.equals(key))
+		if (Configuration.PREFS_KEY_EXCHANGE_CURRENCY.equals(key) || Configuration.PREFS_KEY_IoP_PRECISION.equals(key))
 		{
 			defaultCurrency = config.getExchangeCurrencyCode();
 
@@ -251,7 +251,7 @@ public final class ExchangeRatesFragment extends FancyListFragment implements On
 		balance = application.getWallet().getBalance(BalanceType.ESTIMATED);
 
 		if (adapter != null)
-			adapter.setRateBase(config.getBtcBase());
+			adapter.setRateBase(config.getIoPBase());
 	}
 
 	private final LoaderCallbacks<Cursor> rateLoaderCallbacks = new LoaderManager.LoaderCallbacks<Cursor>()

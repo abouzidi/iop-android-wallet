@@ -554,7 +554,7 @@ public class WalletTransactionsFragment extends Fragment implements LoaderCallba
 	@Override
 	public void onSharedPreferenceChanged(final SharedPreferences sharedPreferences, final String key)
 	{
-		if (Configuration.PREFS_KEY_BTC_PRECISION.equals(key) || Configuration.PREFS_KEY_REMIND_BACKUP.equals(key))
+		if (Configuration.PREFS_KEY_IoP_PRECISION.equals(key) || Configuration.PREFS_KEY_REMIND_BACKUP.equals(key))
 			updateView();
 	}
 

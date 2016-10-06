@@ -1,6 +1,6 @@
 PROLOGUE
 
-This document describes how you can use a backup file on a standard PC to recover your Bitcoins.
+This document describes how you can use a backup file on a standard PC to recover your IoPs.
 Normally, this shouldn't be needed. It is much preferred to just use Options > Safety > Restore
 wallet from within the Bitcoin Wallet app if you can. This guide is only meant for rare cases:
 

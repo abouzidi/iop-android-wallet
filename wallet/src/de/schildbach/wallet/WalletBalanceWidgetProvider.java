@@ -112,9 +112,9 @@ public class WalletBalanceWidgetProvider extends AppWidgetProvider
 			final Bundle appWidgetOptions, final Coin balance)
 	{
 		final Configuration config = new Configuration(PreferenceManager.getDefaultSharedPreferences(context), context.getResources());
-		final MonetaryFormat btcFormat = config.getFormat();
+		final MonetaryFormat IoPFormat = config.getFormat();
 
-		final Spannable balanceStr = new MonetarySpannable(btcFormat.noCode(), balance).applyMarkup(null,
+		final Spannable balanceStr = new MonetarySpannable(IoPFormat.noCode(), balance).applyMarkup(null,
 				MonetarySpannable.STANDARD_INSIGNIFICANT_SPANS);
 
 		final Cursor data = context.getContentResolver().query(ExchangeRatesProvider.contentUri(context.getPackageName(), true), null,
@@ -147,7 +147,7 @@ public class WalletBalanceWidgetProvider extends AppWidgetProvider
 
 		final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.wallet_balance_widget_content);
 
-		final String currencyCode = btcFormat.code();
+		final String currencyCode = IoPFormat.code();
 		if (MonetaryFormat.CODE_BTC.equals(currencyCode))
 			views.setImageViewResource(R.id.widget_wallet_prefix, R.drawable.currency_symbol_btc);
 		else if (MonetaryFormat.CODE_MBTC.equals(currencyCode))
@@ -155,7 +155,7 @@ public class WalletBalanceWidgetProvider extends AppWidgetProvider
 		else if (MonetaryFormat.CODE_UBTC.equals(currencyCode))
 			views.setImageViewResource(R.id.widget_wallet_prefix, R.drawable.currency_symbol_ubtc);
 
-		views.setTextViewText(R.id.widget_wallet_balance_btc, balanceStr);
+		views.setTextViewText(R.id.widget_wallet_balance_IoP, balanceStr);
 		views.setViewVisibility(R.id.widget_wallet_balance_local, localBalanceStr != null ? View.VISIBLE : View.GONE);
 		views.setTextViewText(R.id.widget_wallet_balance_local, localBalanceStr);
 

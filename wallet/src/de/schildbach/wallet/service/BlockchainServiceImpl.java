@@ -29,6 +29,9 @@ import java.util.EnumSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CompletionService;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -87,6 +90,7 @@ import android.net.Uri;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.support.v4.content.LocalBroadcastManager;
@@ -195,13 +199,13 @@ public class BlockchainServiceImpl extends android.app.Service implements Blockc
 		if (address != null && !notificationAddresses.contains(address))
 			notificationAddresses.add(address);
 
-		final MonetaryFormat btcFormat = config.getFormat();
+		final MonetaryFormat IoPFormat = config.getFormat();
 
 		final String packageFlavor = application.applicationPackageFlavor();
 		final String msgSuffix = packageFlavor != null ? " [" + packageFlavor + "]" : "";
 
-		final String tickerMsg = getString(R.string.notification_coins_received_msg, btcFormat.format(amount)) + msgSuffix;
-		final String msg = getString(R.string.notification_coins_received_msg, btcFormat.format(notificationAccumulatedAmount)) + msgSuffix;
+		final String tickerMsg = getString(R.string.notification_coins_received_msg, IoPFormat.format(amount)) + msgSuffix;
+		final String msg = getString(R.string.notification_coins_received_msg, IoPFormat.format(notificationAccumulatedAmount)) + msgSuffix;
 
 		final StringBuilder text = new StringBuilder();
 		for (final Address notificationAddress : notificationAddresses)
@@ -337,6 +341,7 @@ public class BlockchainServiceImpl extends android.app.Service implements Blockc
 		};
 	};
 
+	private ExecutorService executor;
 	private final BroadcastReceiver connectivityReceiver = new BroadcastReceiver()
 	{
 		@Override
@@ -375,40 +380,59 @@ public class BlockchainServiceImpl extends android.app.Service implements Blockc
 		@SuppressLint("Wakelock")
 		private void check()
 		{
-			final Wallet wallet = application.getWallet();
 
-			if (impediments.isEmpty() && peerGroup == null)
+			if (Looper.getMainLooper().getThread().equals(Thread.currentThread())) {
+
+				executor.submit(
+						new Runnable() {
+					@Override
+					public void run() {
+						org.bitcoinj.core.Context.propagate(Constants.CONTEXT);
+						doCheck();
+					}
+				});
+			}else {
+				doCheck();
+			}
+
+		}
+	};
+
+	private void doCheck(){
+		final Wallet wallet = application.getWallet();
+
+		if (impediments.isEmpty() && peerGroup == null)
+		{
+			log.debug("acquiring wakelock");
+			wakeLock.acquire();
+
+			// consistency check
+			final int walletLastBlockSeenHeight = wallet.getLastBlockSeenHeight();
+			final int bestChainHeight = blockChain.getBestChainHeight();
+			if (walletLastBlockSeenHeight != -1 && walletLastBlockSeenHeight != bestChainHeight)
 			{
-				log.debug("acquiring wakelock");
-				wakeLock.acquire();
+				final String message = "wallet/blockchain out of sync: " + walletLastBlockSeenHeight + "/" + bestChainHeight;
+				log.error(message);
+				CrashReporter.saveBackgroundTrace(new RuntimeException(message), application.packageInfo());
+			}
 
-				// consistency check
-				final int walletLastBlockSeenHeight = wallet.getLastBlockSeenHeight();
-				final int bestChainHeight = blockChain.getBestChainHeight();
-				if (walletLastBlockSeenHeight != -1 && walletLastBlockSeenHeight != bestChainHeight)
-				{
-					final String message = "wallet/blockchain out of sync: " + walletLastBlockSeenHeight + "/" + bestChainHeight;
-					log.error(message);
-					CrashReporter.saveBackgroundTrace(new RuntimeException(message), application.packageInfo());
-				}
+			log.info("starting peergroup");
+			peerGroup = new PeerGroup(Constants.NETWORK_PARAMETERS, blockChain);
+			peerGroup.setDownloadTxDependencies(0); // recursive implementation causes StackOverflowError
+			peerGroup.addWallet(wallet);
+			peerGroup.setUserAgent(Constants.USER_AGENT, application.packageInfo().versionName);
+			peerGroup.addConnectedEventListener(peerConnectivityListener);
+			peerGroup.addDisconnectedEventListener(peerConnectivityListener);
 
-				log.info("starting peergroup");
-				peerGroup = new PeerGroup(Constants.NETWORK_PARAMETERS, blockChain);
-				peerGroup.setDownloadTxDependencies(0); // recursive implementation causes StackOverflowError
-				peerGroup.addWallet(wallet);
-				peerGroup.setUserAgent(Constants.USER_AGENT, application.packageInfo().versionName);
-				peerGroup.addConnectedEventListener(peerConnectivityListener);
-				peerGroup.addDisconnectedEventListener(peerConnectivityListener);
+			final int maxConnectedPeers = application.maxConnectedPeers();
 
-				final int maxConnectedPeers = application.maxConnectedPeers();
+			final String trustedPeerHost = config.getTrustedPeerHost();
+			final boolean hasTrustedPeer = trustedPeerHost != null;
 
-				final String trustedPeerHost = config.getTrustedPeerHost();
-				final boolean hasTrustedPeer = trustedPeerHost != null;
-
-				final boolean connectTrustedPeerOnly = hasTrustedPeer && config.getTrustedPeerOnly();
-				peerGroup.setMaxConnections(connectTrustedPeerOnly ? 1 : maxConnectedPeers);
-				peerGroup.setConnectTimeoutMillis(Constants.PEER_TIMEOUT_MS);
-				peerGroup.setPeerDiscoveryTimeoutMillis(Constants.PEER_DISCOVERY_TIMEOUT_MS);
+			final boolean connectTrustedPeerOnly = hasTrustedPeer && config.getTrustedPeerOnly();
+			peerGroup.setMaxConnections(connectTrustedPeerOnly ? 1 : maxConnectedPeers);
+			peerGroup.setConnectTimeoutMillis(Constants.PEER_TIMEOUT_MS);
+			peerGroup.setPeerDiscoveryTimeoutMillis(Constants.PEER_DISCOVERY_TIMEOUT_MS);
 
 
 //				peerGroup.addPeerDiscovery(new PeerDiscovery()
@@ -452,46 +476,45 @@ public class BlockchainServiceImpl extends android.app.Service implements Blockc
 //						normalPeerDiscovery.shutdown();
 //					}
 //				});
-				if(Constants.NETWORK_PARAMETERS.equals(TestNet3Params.get() )) {
+			if(Constants.NETWORK_PARAMETERS.equals(TestNet3Params.get() )) {
 //					peerGroup.addPeerDiscovery(new DnsDiscovery(Constants.NETWORK_PARAMETERS));
-					for (PeerAddress peerAddress : TestnetUtil.getConnectedPeers(Constants.NETWORK_PARAMETERS)) {
-						peerGroup.addAddress(peerAddress);
-					}
-				} else if (Constants.NETWORK_PARAMETERS.equals(RegTestParams.get())) {
-					for (PeerAddress peerAddress : RegtestUtil.getConnectedPeers(Constants.NETWORK_PARAMETERS)) {
-						peerGroup.addAddress(peerAddress);
-					}
+				for (PeerAddress peerAddress : TestnetUtil.getConnectedPeers(Constants.NETWORK_PARAMETERS)) {
+					peerGroup.addAddress(peerAddress);
 				}
-
-
-				log.info("QQQQQ -PEnding peers- QQQQQQ\n peers: "+ Arrays.toString(peerGroup.getPendingPeers().toArray()));
-
-				// start peergroup
-				peerGroup.startAsync();
-				peerGroup.startBlockChainDownload(blockchainDownloadListener);
-
-				log.info("####### Blockchain ##############");
-				log.info("Blockchain height: "+blockChain.getBestChainHeight());
-				log.info("BlockStore: "+blockStore.getParams().getGenesisBlock());
-				log.info("#######  end Blockchain ##############");
-
-			}
-			else if (!impediments.isEmpty() && peerGroup != null)
-			{
-				log.info("stopping peergroup");
-				peerGroup.removeDisconnectedEventListener(peerConnectivityListener);
-				peerGroup.removeConnectedEventListener(peerConnectivityListener);
-				peerGroup.removeWallet(wallet);
-				peerGroup.stopAsync();
-				peerGroup = null;
-
-				log.debug("releasing wakelock");
-				wakeLock.release();
+			} else if (Constants.NETWORK_PARAMETERS.equals(RegTestParams.get())) {
+				for (PeerAddress peerAddress : RegtestUtil.getConnectedPeers(Constants.NETWORK_PARAMETERS)) {
+					peerGroup.addAddress(peerAddress);
+				}
 			}
 
-			broadcastBlockchainState();
+
+			log.info("QQQQQ -PEnding peers- QQQQQQ\n peers: "+ Arrays.toString(peerGroup.getPendingPeers().toArray()));
+
+			// start peergroup
+			peerGroup.startAsync();
+			peerGroup.startBlockChainDownload(blockchainDownloadListener);
+
+			log.info("####### Blockchain ##############");
+			log.info("Blockchain height: "+blockChain.getBestChainHeight());
+			log.info("BlockStore: "+blockStore.getParams().getGenesisBlock());
+			log.info("#######  end Blockchain ##############");
+
 		}
-	};
+		else if (!impediments.isEmpty() && peerGroup != null)
+		{
+			log.info("stopping peergroup");
+			peerGroup.removeDisconnectedEventListener(peerConnectivityListener);
+			peerGroup.removeConnectedEventListener(peerConnectivityListener);
+			peerGroup.removeWallet(wallet);
+			peerGroup.stopAsync();
+			peerGroup = null;
+
+			log.debug("releasing wakelock");
+			wakeLock.release();
+		}
+
+		broadcastBlockchainState();
+	}
 
 	private final static class ActivityHistoryEntry
 	{
@@ -604,6 +627,7 @@ public class BlockchainServiceImpl extends android.app.Service implements Blockc
 	public void onCreate()
 	{
 		serviceCreatedAt = System.currentTimeMillis();
+		if (executor==null) executor = Executors.newSingleThreadExecutor();
 		log.debug(".onCreate()");
 
 		super.onCreate();
@@ -736,60 +760,67 @@ public class BlockchainServiceImpl extends android.app.Service implements Blockc
 	}
 
 	@Override
-	public void onDestroy()
-	{
-		log.debug(".onDestroy()");
+	public void onDestroy() {
+		try {
 
-		WalletApplication.scheduleStartBlockchainService(this);
+			log.debug(".onDestroy()");
 
-		unregisterReceiver(tickReceiver);
+			org.bitcoinj.core.Context.propagate(Constants.CONTEXT);
 
-		application.getWallet().removeChangeEventListener(walletEventListener);
-		application.getWallet().removeCoinsSentEventListener(walletEventListener);
-		application.getWallet().removeCoinsReceivedEventListener(walletEventListener);
+			WalletApplication.scheduleStartBlockchainService(this);
 
-		unregisterReceiver(connectivityReceiver);
+			unregisterReceiver(tickReceiver);
 
-		if (peerGroup != null)
-		{
-			peerGroup.removeDisconnectedEventListener(peerConnectivityListener);
-			peerGroup.removeConnectedEventListener(peerConnectivityListener);
-			peerGroup.removeWallet(application.getWallet());
-			peerGroup.stop();
+			application.getWallet().removeChangeEventListener(walletEventListener);
+			application.getWallet().removeCoinsSentEventListener(walletEventListener);
+			application.getWallet().removeCoinsReceivedEventListener(walletEventListener);
 
-			log.info("peergroup stopped");
+			unregisterReceiver(connectivityReceiver);
+
+			if (peerGroup != null) {
+				executor.submit(new Runnable() {
+					@Override
+					public void run() {
+						peerGroup.removeDisconnectedEventListener(peerConnectivityListener);
+						peerGroup.removeConnectedEventListener(peerConnectivityListener);
+						peerGroup.removeWallet(application.getWallet());
+						peerGroup.stop();
+
+						log.info("peergroup stopped");
+					}
+				});
+
+			}
+
+			peerConnectivityListener.stop();
+
+			delayHandler.removeCallbacksAndMessages(null);
+
+			try {
+				blockStore.close();
+			} catch (final BlockStoreException x) {
+				throw new RuntimeException(x);
+			}
+
+			application.saveWallet();
+
+			if (wakeLock.isHeld()) {
+				log.debug("wakelock still held, releasing");
+				wakeLock.release();
+			}
+
+			if (resetBlockchainOnShutdown) {
+				log.info("removing blockchain");
+				blockChainFile.delete();
+			}
+
+			super.onDestroy();
+
+			log.info("service was up for " + ((System.currentTimeMillis() - serviceCreatedAt) / 1000 / 60) + " minutes");
+
+		}catch(Exception e){
+			e.printStackTrace();
 		}
-
-		peerConnectivityListener.stop();
-
-		delayHandler.removeCallbacksAndMessages(null);
-
-		try
-		{
-			blockStore.close();
-		}
-		catch (final BlockStoreException x)
-		{
-			throw new RuntimeException(x);
-		}
-
-		application.saveWallet();
-
-		if (wakeLock.isHeld())
-		{
-			log.debug("wakelock still held, releasing");
-			wakeLock.release();
-		}
-
-		if (resetBlockchainOnShutdown)
-		{
-			log.info("removing blockchain");
-			blockChainFile.delete();
-		}
-
-		super.onDestroy();
-
-		log.info("service was up for " + ((System.currentTimeMillis() - serviceCreatedAt) / 1000 / 60) + " minutes");
 	}
 
 	@Override

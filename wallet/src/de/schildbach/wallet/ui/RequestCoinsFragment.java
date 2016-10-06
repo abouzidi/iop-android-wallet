@@ -197,15 +197,15 @@ public final class RequestCoinsFragment extends Fragment implements NfcAdapter.C
 			}
 		});
 
-		final CurrencyAmountView btcAmountView = (CurrencyAmountView) view.findViewById(R.id.request_coins_amount_btc);
-		btcAmountView.setCurrencySymbol(config.getFormat().code());
-		btcAmountView.setInputFormat(config.getMaxPrecisionFormat());
-		btcAmountView.setHintFormat(config.getFormat());
+		final CurrencyAmountView IoPAmountView = (CurrencyAmountView) view.findViewById(R.id.request_coins_amount_IoP);
+		IoPAmountView.setCurrencySymbol(config.getFormat().code());
+		IoPAmountView.setInputFormat(config.getMaxPrecisionFormat());
+		IoPAmountView.setHintFormat(config.getFormat());
 
 		final CurrencyAmountView localAmountView = (CurrencyAmountView) view.findViewById(R.id.request_coins_amount_local);
 		localAmountView.setInputFormat(Constants.LOCAL_FORMAT);
 		localAmountView.setHintFormat(Constants.LOCAL_FORMAT);
-		amountCalculatorLink = new CurrencyCalculatorLink(btcAmountView, localAmountView);
+		amountCalculatorLink = new CurrencyCalculatorLink(IoPAmountView, localAmountView);
 
 		acceptBluetoothPaymentView = (CheckBox) view.findViewById(R.id.request_coins_accept_bluetooth_payment);
 		acceptBluetoothPaymentView.setVisibility(Bluetooth.canListen(bluetoothAdapter) ? View.VISIBLE : View.GONE);

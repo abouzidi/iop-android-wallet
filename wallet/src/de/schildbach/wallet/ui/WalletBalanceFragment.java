@@ -62,7 +62,7 @@ public final class WalletBalanceFragment extends Fragment
 	private LoaderManager loaderManager;
 
 	private View viewBalance;
-	private CurrencyTextView viewBalanceBtc;
+	private CurrencyTextView viewBalanceIoP;
 	private View viewBalanceTooMuch;
 	private CurrencyTextView viewBalanceLocal;
 	private TextView viewProgress;
@@ -139,8 +139,8 @@ public final class WalletBalanceFragment extends Fragment
 			viewBalance.setEnabled(false);
 		}
 
-		viewBalanceBtc = (CurrencyTextView) view.findViewById(R.id.wallet_balance_btc);
-		viewBalanceBtc.setPrefixScaleX(0.9f);
+		viewBalanceIoP = (CurrencyTextView) view.findViewById(R.id.wallet_balance_IoP);
+		viewBalanceIoP.setPrefixScaleX(0.9f);
 
 		viewBalanceTooMuch = view.findViewById(R.id.wallet_balance_too_much);
 
@@ -262,9 +262,9 @@ public final class WalletBalanceFragment extends Fragment
 
 			if (balance != null)
 			{
-				viewBalanceBtc.setVisibility(View.VISIBLE);
-				viewBalanceBtc.setFormat(config.getFormat());
-				viewBalanceBtc.setAmount(balance);
+				viewBalanceIoP.setVisibility(View.VISIBLE);
+				viewBalanceIoP.setFormat(config.getFormat());
+				viewBalanceIoP.setAmount(balance);
 
 				final boolean tooMuch = balance.isGreaterThan(TOO_MUCH_BALANCE_THRESHOLD);
 
@@ -288,7 +288,7 @@ public final class WalletBalanceFragment extends Fragment
 			}
 			else
 			{
-				viewBalanceBtc.setVisibility(View.INVISIBLE);
+				viewBalanceIoP.setVisibility(View.INVISIBLE);
 			}
 
 			viewProgress.setVisibility(View.GONE);

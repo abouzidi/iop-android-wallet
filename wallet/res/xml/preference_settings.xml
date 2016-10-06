@@ -5,7 +5,7 @@
 		android:defaultValue="2/3"
 		android:entries="@array/preferences_precision_labels"
 		android:entryValues="@array/preferences_precision_values"
-		android:key="btc_precision"
+		android:key="IoP_precision"
 		android:summary="@string/preferences_precision_summary"
 		android:title="@string/preferences_precision_title" />
 

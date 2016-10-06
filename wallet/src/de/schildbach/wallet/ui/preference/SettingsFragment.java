@@ -52,7 +52,7 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
 	private HandlerThread backgroundThread;
 	private Handler backgroundHandler;
 
-	private Preference btcPrecisionPreference;
+	private Preference IoPPrecisionPreference;
 	private Preference trustedPeerPreference;
 	private Preference trustedPeerOnlyPreference;
 
@@ -80,8 +80,8 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
 		backgroundThread.start();
 		backgroundHandler = new Handler(backgroundThread.getLooper());
 
-		btcPrecisionPreference = findPreference(Configuration.PREFS_KEY_BTC_PRECISION);
-		btcPrecisionPreference.setOnPreferenceChangeListener(this);
+		IoPPrecisionPreference = findPreference(Configuration.PREFS_KEY_IoP_PRECISION);
+		IoPPrecisionPreference.setOnPreferenceChangeListener(this);
 
 		trustedPeerPreference = findPreference(Configuration.PREFS_KEY_TRUSTED_PEER);
 		((EditTextPreference) trustedPeerPreference).getEditText().setSingleLine();
@@ -101,7 +101,7 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
 	{
 		trustedPeerOnlyPreference.setOnPreferenceChangeListener(null);
 		trustedPeerPreference.setOnPreferenceChangeListener(null);
-		btcPrecisionPreference.setOnPreferenceChangeListener(null);
+		IoPPrecisionPreference.setOnPreferenceChangeListener(null);
 
 		backgroundThread.getLooper().quit();
 
@@ -117,7 +117,7 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
 			@Override
 			public void run()
 			{
-				if (preference.equals(btcPrecisionPreference))
+				if (preference.equals(IoPPrecisionPreference))
 				{
 					WalletBalanceWidgetProvider.updateWidgets(activity, application.getWallet());
 				}
