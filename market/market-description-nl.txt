@@ -1,35 +1,35 @@
-<b>Draag je Bitcoins altijd bij je, in je broekzak!</b> Je kunt vlot betalen door een QR-code te scannen. Als winkelier ontvang je je betalingen betrouwbaar en onmiddelijk. Bitcoin Wallet is de eerste mobiele Bitcoin-app, en misschien wel de veiligste!
+<b>Draag je IoPs altijd bij je, in je broekzak!</b> Je kunt vlot betalen door een QR-code te scannen. Als winkelier ontvang je je betalingen betrouwbaar en onmiddelijk. IoP Wallet is de eerste mobiele IoP-app, en misschien wel de veiligste!
 
 
 <b>EIGENSCHAPPEN</b>
 
 • Geen registratie, webservice of cloud vereist! Deze portemonnee is decentraal en peer-to-peer.
-• Toon Bitcoin bedrag in BTC, mBTC en µBTC.
+• Toon IoP bedrag in IoP, mIoP en µIoP.
 • Conversie van en naar nationale valuta.
-* Verzend en ontvang Bitcoin via NFC, QR-codes of Bitcoin-URL's
-• Adresboek voor regelmatig gebruikte Bitcoin-adressen.
+* Verzend en ontvang IoP via NFC, QR-codes of IoP-URL's
+• Adresboek voor regelmatig gebruikte IoP-adressen.
 • Offline kun je nog steeds betalen via Bluetooth.
-• Systeemmelding wanneer je Bitcoins ontvangt
+• Systeemmelding wanneer je IoPs ontvangt
 • Opname van papieren portemonnee (b.v. voor cold storage).
-• App widget voor Bitcoin saldo.
+• App widget voor IoP saldo.
 
 
 <b>HELP MEE</b>
 
-Bitcoin Wallet is <b>open source</b> en <b>free software</b>. Licentie: GPLv3
+IoP Wallet is <b>open source</b> en <b>free software</b>. Licentie: GPLv3
 https://www.gnu.org/licenses/gpl-3.0.en.html
 
 Onze broncode is beschikbaar op GitHub:
-https://github.com/bitcoin-wallet/bitcoin-wallet
+https://github.com/IoP-wallet/IoP-wallet
 
 Alle vertalingen worden geregeld via Transifex:
-https://www.transifex.com/bitcoin-wallet/bitcoin-wallet/
+https://www.transifex.com/IoP-wallet/IoP-wallet/
 
 
 <b>TESTIMONIALS</b>
 
-* Veel mobiele portemonnees baseren hun code op Bitcoin Wallet. Voorbeelden: blockchain.info en BTCX.
-* Aanbevolen mobiele portemonnee op https://bitcoin.org
+* Veel mobiele portemonnees baseren hun code op IoP Wallet. Voorbeelden: blockchain.info en IoPX.
+* Aanbevolen mobiele portemonnee op https://IoP.org
 * Aangeraden door BitPay.
 
 
