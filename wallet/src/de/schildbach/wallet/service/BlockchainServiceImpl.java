@@ -341,7 +341,6 @@ public class BlockchainServiceImpl extends android.app.Service implements Blockc
 		};
 	};
 
-	private ExecutorService executor;
 	private final BroadcastReceiver connectivityReceiver = new BroadcastReceiver()
 	{
 		@Override
@@ -381,19 +380,20 @@ public class BlockchainServiceImpl extends android.app.Service implements Blockc
 		private void check()
 		{
 
-			if (Looper.getMainLooper().getThread().equals(Thread.currentThread())) {
-
-				executor.submit(
-						new Runnable() {
-					@Override
-					public void run() {
-						org.bitcoinj.core.Context.propagate(Constants.CONTEXT);
-						doCheck();
-					}
-				});
-			}else {
-				doCheck();
-			}
+//			if (Looper.getMainLooper().getThread().equals(Thread.currentThread())) {
+//
+//				executor.submit(
+//						new Runnable() {
+//					@Override
+//					public void run() {
+//						org.bitcoinj.core.Context.propagate(Constants.CONTEXT);
+//
+//					}
+//				});
+//			}else {
+//				doCheck();
+//			}
+			doCheck();
 
 		}
 	};
@@ -435,57 +435,57 @@ public class BlockchainServiceImpl extends android.app.Service implements Blockc
 			peerGroup.setPeerDiscoveryTimeoutMillis(Constants.PEER_DISCOVERY_TIMEOUT_MS);
 
 
-//				peerGroup.addPeerDiscovery(new PeerDiscovery()
-//				{
-//					private final PeerDiscovery normalPeerDiscovery = MultiplexingDiscovery.forServices(Constants.NETWORK_PARAMETERS, 0);
-//
-//					@Override
-//					public InetSocketAddress[] getPeers(final long services, final long timeoutValue, final TimeUnit timeoutUnit)
-//							throws PeerDiscoveryException
-//					{
-//						final List<InetSocketAddress> peers = new LinkedList<InetSocketAddress>();
-//
-//						boolean needsTrimPeersWorkaround = false;
-//
-//						if (hasTrustedPeer)
-//						{
-//							log.info("trusted peer '" + trustedPeerHost + "'" + (connectTrustedPeerOnly ? " only" : ""));
-//
-//							final InetSocketAddress addr = new InetSocketAddress(trustedPeerHost, Constants.NETWORK_PARAMETERS.getPort());
-//							if (addr.getAddress() != null)
-//							{
-//								peers.add(addr);
-//								needsTrimPeersWorkaround = true;
-//							}
-//						}
-//
-//						if (!connectTrustedPeerOnly)
-//							peers.addAll(Arrays.asList(normalPeerDiscovery.getPeers(services, timeoutValue, timeoutUnit)));
-//
-//						// workaround because PeerGroup will shuffle peers
-//						if (needsTrimPeersWorkaround)
-//							while (peers.size() >= maxConnectedPeers)
-//								peers.remove(peers.size() - 1);
-//
-//						return peers.toArray(new InetSocketAddress[0]);
-//					}
-//
-//					@Override
-//					public void shutdown()
-//					{
-//						normalPeerDiscovery.shutdown();
-//					}
-//				});
-			if(Constants.NETWORK_PARAMETERS.equals(TestNet3Params.get() )) {
-//					peerGroup.addPeerDiscovery(new DnsDiscovery(Constants.NETWORK_PARAMETERS));
-				for (PeerAddress peerAddress : TestnetUtil.getConnectedPeers(Constants.NETWORK_PARAMETERS)) {
-					peerGroup.addAddress(peerAddress);
-				}
-			} else if (Constants.NETWORK_PARAMETERS.equals(RegTestParams.get())) {
-				for (PeerAddress peerAddress : RegtestUtil.getConnectedPeers(Constants.NETWORK_PARAMETERS)) {
-					peerGroup.addAddress(peerAddress);
-				}
-			}
+				peerGroup.addPeerDiscovery(new PeerDiscovery()
+				{
+					private final PeerDiscovery normalPeerDiscovery = MultiplexingDiscovery.forServices(Constants.NETWORK_PARAMETERS, 0);
+
+					@Override
+					public InetSocketAddress[] getPeers(final long services, final long timeoutValue, final TimeUnit timeoutUnit)
+							throws PeerDiscoveryException
+					{
+						final List<InetSocketAddress> peers = new LinkedList<InetSocketAddress>();
+
+						boolean needsTrimPeersWorkaround = false;
+
+						if (hasTrustedPeer)
+						{
+							log.info("trusted peer '" + trustedPeerHost + "'" + (connectTrustedPeerOnly ? " only" : ""));
+
+							final InetSocketAddress addr = new InetSocketAddress(trustedPeerHost, Constants.NETWORK_PARAMETERS.getPort());
+							if (addr.getAddress() != null)
+							{
+								peers.add(addr);
+								needsTrimPeersWorkaround = true;
+							}
+						}
+
+						if (!connectTrustedPeerOnly)
+							peers.addAll(Arrays.asList(normalPeerDiscovery.getPeers(services, timeoutValue, timeoutUnit)));
+
+						// workaround because PeerGroup will shuffle peers
+						if (needsTrimPeersWorkaround)
+							while (peers.size() >= maxConnectedPeers)
+								peers.remove(peers.size() - 1);
+
+						return peers.toArray(new InetSocketAddress[0]);
+					}
+
+					@Override
+					public void shutdown()
+					{
+						normalPeerDiscovery.shutdown();
+					}
+				});
+//			if(Constants.NETWORK_PARAMETERS.equals(TestNet3Params.get() )) {
+////					peerGroup.addPeerDiscovery(new DnsDiscovery(Constants.NETWORK_PARAMETERS));
+//				for (PeerAddress peerAddress : TestnetUtil.getConnectedPeers(Constants.NETWORK_PARAMETERS)) {
+//					peerGroup.addAddress(peerAddress);
+//				}
+//			} else if (Constants.NETWORK_PARAMETERS.equals(RegTestParams.get())) {
+//				for (PeerAddress peerAddress : RegtestUtil.getConnectedPeers(Constants.NETWORK_PARAMETERS)) {
+//					peerGroup.addAddress(peerAddress);
+//				}
+//			}
 
 
 			log.info("QQQQQ -PEnding peers- QQQQQQ\n peers: "+ Arrays.toString(peerGroup.getPendingPeers().toArray()));
@@ -627,7 +627,7 @@ public class BlockchainServiceImpl extends android.app.Service implements Blockc
 	public void onCreate()
 	{
 		serviceCreatedAt = System.currentTimeMillis();
-		if (executor==null) executor = Executors.newSingleThreadExecutor();
+//		if (executor==null || executor.isShutdown()) executor = Executors.newSingleThreadExecutor();
 		log.debug(".onCreate()");
 
 		super.onCreate();
@@ -778,17 +778,13 @@ public class BlockchainServiceImpl extends android.app.Service implements Blockc
 			unregisterReceiver(connectivityReceiver);
 
 			if (peerGroup != null) {
-				executor.submit(new Runnable() {
-					@Override
-					public void run() {
-						peerGroup.removeDisconnectedEventListener(peerConnectivityListener);
-						peerGroup.removeConnectedEventListener(peerConnectivityListener);
-						peerGroup.removeWallet(application.getWallet());
-						peerGroup.stop();
 
-						log.info("peergroup stopped");
-					}
-				});
+				peerGroup.removeDisconnectedEventListener(peerConnectivityListener);
+				peerGroup.removeConnectedEventListener(peerConnectivityListener);
+				peerGroup.removeWallet(application.getWallet());
+				peerGroup.stopAsync();
+
+				log.info("peergroup stopped");
 
 			}
 

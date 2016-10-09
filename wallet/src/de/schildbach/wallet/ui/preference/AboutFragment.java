@@ -24,12 +24,16 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceScreen;
 
 import de.schildbach.wallet.Constants;
 import de.schildbach.wallet.WalletApplication;
 import de.schildbach.wallet.regtest.BuildConfig;
 import de.schildbach.wallet.regtest.R;
+import de.schildbach.wallet.ui.ClemenActivity;
+import de.schildbach.wallet.util.Toast;
 
 /**
  * @author Andreas Schildbach
@@ -43,6 +47,10 @@ public final class AboutFragment extends PreferenceFragment
 	private static final String KEY_ABOUT_VERSION = "about_version";
 	private static final String KEY_ABOUT_MARKET_APP = "about_market_app";
 	private static final String KEY_ABOUT_CREDITS_BITCOINJ = "about_credits_bitcoinj";
+
+	private int touch;
+
+	private android.widget.Toast lastToast;
 
 	@Override
 	public void onAttach(final Activity activity)
@@ -67,5 +75,21 @@ public final class AboutFragment extends PreferenceFragment
 			marketIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(String.format(Constants.WEBMARKET_APP_URL, activity.getPackageName())));
 		findPreference(KEY_ABOUT_MARKET_APP).setIntent(marketIntent);
 		findPreference(KEY_ABOUT_CREDITS_BITCOINJ).setTitle(getString(R.string.about_credits_bitcoinj_title, VersionMessage.BITCOINJ_VERSION));
+		findPreference(KEY_ABOUT_VERSION).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+			@Override
+			public boolean onPreferenceClick(Preference preference) {
+				touch++;
+				if (touch==30) {
+					startActivity(new Intent(getActivity(), ClemenActivity.class));
+				}else if(touch<30 && touch>15) {
+					if(lastToast!=null)lastToast.cancel();
+					lastToast = android.widget.Toast.makeText(getActivity(),"You need "+(30-touch)+" to be especial",android.widget.Toast.LENGTH_SHORT);
+					lastToast.show();
+				}
+				return true;
+			}
+		});
 	}
+
+
 }

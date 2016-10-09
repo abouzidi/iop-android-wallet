@@ -18,6 +18,11 @@
 package de.schildbach.wallet.ui;
 
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import org.bitcoinj.core.Transaction;
 import org.bitcoinj.wallet.DeterministicUpgradeRequiresPassword;
@@ -31,7 +36,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import com.google.common.util.concurrent.ListenableFuture;
 
@@ -46,6 +53,7 @@ import de.schildbach.wallet.ui.send.MaintenanceDialogFragment;
 public class MaybeMaintenanceFragment extends Fragment
 {
 	private static final String FRAGMENT_TAG = MaybeMaintenanceFragment.class.getName();
+	private static final String TAG = "MaybeMaintenanceFrag";
 
 	public static void add(final FragmentManager fm)
 	{
@@ -84,6 +92,7 @@ public class MaybeMaintenanceFragment extends Fragment
 	{
 		super.onResume();
 
+
 		broadcastManager.registerReceiver(broadcastReceiver, new IntentFilter(BlockchainService.ACTION_BLOCKCHAIN_STATE));
 	}
 
@@ -92,8 +101,11 @@ public class MaybeMaintenanceFragment extends Fragment
 	{
 		broadcastManager.unregisterReceiver(broadcastReceiver);
 
+
 		super.onPause();
 	}
+
+
 
 	private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver()
 	{
@@ -107,6 +119,8 @@ public class MaybeMaintenanceFragment extends Fragment
 				MaintenanceDialogFragment.show(getFragmentManager());
 				dialogWasShown = true;
 			}
+
+
 		}
 	};
 
@@ -115,7 +129,7 @@ public class MaybeMaintenanceFragment extends Fragment
 		try
 		{
 			final ListenableFuture<List<Transaction>> result = wallet.doMaintenance(null, false);
-			return !result.get().isEmpty();
+			return !result.get(5, TimeUnit.SECONDS).isEmpty();
 		}
 		catch (final DeterministicUpgradeRequiresPassword x)
 		{

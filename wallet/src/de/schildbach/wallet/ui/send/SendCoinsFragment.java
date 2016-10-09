@@ -159,8 +159,8 @@ public final class SendCoinsFragment extends Fragment
 	private TextView payeeNameView;
 	private TextView payeeVerifiedByView;
 	private AutoCompleteTextView receivingAddressView;
-	private ReceivingAddressViewAdapter receivingAddressViewAdapter;
-	private ReceivingAddressLoaderCallbacks receivingAddressLoaderCallbacks;
+//	private ReceivingAddressViewAdapter receivingAddressViewAdapter;
+//	private ReceivingAddressLoaderCallbacks receivingAddressLoaderCallbacks;
 	private View receivingStaticView;
 	private TextView receivingStaticAddressView;
 	private TextView receivingStaticLabelView;
@@ -193,10 +193,10 @@ public final class SendCoinsFragment extends Fragment
 	private Exception dryrunException;
 
 	// comentado por ahora ya que no tenemos web service de rate
-//	private static final int ID_RATE_LOADER = 0;
+	private static final int ID_RATE_LOADER = 0;
 	// comentado por ahora a ver que pasa
-//	private static final int ID_RECEIVING_ADDRESS_BOOK_LOADER = 1;
-//	private static final int ID_RECEIVING_ADDRESS_NAME_LOADER = 2;
+	private static final int ID_RECEIVING_ADDRESS_BOOK_LOADER = 1;
+	private static final int ID_RECEIVING_ADDRESS_NAME_LOADER = 2;
 
 	private static final int REQUEST_CODE_SCAN = 0;
 	private static final int REQUEST_CODE_ENABLE_BLUETOOTH_FOR_PAYMENT_REQUEST = 1;
@@ -253,19 +253,19 @@ public final class SendCoinsFragment extends Fragment
 		@Override
 		public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id)
 		{
-			final Cursor cursor = receivingAddressViewAdapter.getCursor();
-			cursor.moveToPosition(position);
-			final String address = cursor.getString(cursor.getColumnIndexOrThrow(AddressBookProvider.KEY_ADDRESS));
-			final String label = cursor.getString(cursor.getColumnIndexOrThrow(AddressBookProvider.KEY_LABEL));
-			try
-			{
-				validatedAddress = new AddressAndLabel(Constants.NETWORK_PARAMETERS, address, label);
-				receivingAddressView.setText(null);
-			}
-			catch (final AddressFormatException x)
-			{
-				// swallow
-			}
+//			final Cursor cursor = receivingAddressViewAdapter.getCursor();
+//			cursor.moveToPosition(position);
+//			final String address = cursor.getString(cursor.getColumnIndexOrThrow(AddressBookProvider.KEY_ADDRESS));
+//			final String label = cursor.getString(cursor.getColumnIndexOrThrow(AddressBookProvider.KEY_LABEL));
+//			try
+//			{
+//				validatedAddress = new AddressAndLabel(Constants.NETWORK_PARAMETERS, address, label);
+//				receivingAddressView.setText(null);
+//			}
+//			catch (final AddressFormatException x)
+//			{
+//				// swallow
+//			}
 		}
 	}
 
@@ -420,14 +420,14 @@ public final class SendCoinsFragment extends Fragment
 			final String constraint = Strings.nullToEmpty(args != null ? args.getString(ARG_CONSTRAINT) : null);
 
 			// Comentado por ahora a ver que pasa..
-//			if (id == ID_RECEIVING_ADDRESS_BOOK_LOADER)
-//				return new CursorLoader(context, AddressBookProvider.contentUri(context.getPackageName()), null, AddressBookProvider.SELECTION_QUERY,
-//						new String[] { constraint }, null);
-//			else if (id == ID_RECEIVING_ADDRESS_NAME_LOADER)
-//				return new ReceivingAddressNameLoader(context, constraint);
-//			else
-//				throw new IllegalArgumentException();
-			throw new IllegalArgumentException("Method not implemented..");
+			if (id == ID_RECEIVING_ADDRESS_BOOK_LOADER)
+				return new CursorLoader(context, AddressBookProvider.contentUri(context.getPackageName()), null, AddressBookProvider.SELECTION_QUERY,
+						new String[] { constraint }, null);
+			else if (id == ID_RECEIVING_ADDRESS_NAME_LOADER)
+				return new ReceivingAddressNameLoader(context, constraint);
+			else
+				throw new IllegalArgumentException();
+//			throw new IllegalArgumentException("Method not implemented..");
 		}
 
 		@Override
@@ -663,12 +663,12 @@ public final class SendCoinsFragment extends Fragment
 		payeeVerifiedByView = (TextView) view.findViewById(R.id.send_coins_payee_verified_by);
 
 		receivingAddressView = (AutoCompleteTextView) view.findViewById(R.id.send_coins_receiving_address);
-		receivingAddressViewAdapter = new ReceivingAddressViewAdapter(activity);
-		receivingAddressLoaderCallbacks = new ReceivingAddressLoaderCallbacks(activity, receivingAddressViewAdapter);
-		receivingAddressView.setAdapter(receivingAddressViewAdapter);
-		receivingAddressView.setOnFocusChangeListener(receivingAddressListener);
-		receivingAddressView.addTextChangedListener(receivingAddressListener);
-		receivingAddressView.setOnItemClickListener(receivingAddressListener);
+//		receivingAddressViewAdapter = new ReceivingAddressViewAdapter(activity);
+//		receivingAddressLoaderCallbacks = new ReceivingAddressLoaderCallbacks(activity, receivingAddressViewAdapter);
+//		receivingAddressView.setAdapter(receivingAddressViewAdapter);
+//		receivingAddressView.setOnFocusChangeListener(receivingAddressListener);
+//		receivingAddressView.addTextChangedListener(receivingAddressListener);
+//		receivingAddressView.setOnItemClickListener(receivingAddressListener);
 
 		receivingStaticView = view.findViewById(R.id.send_coins_receiving_static);
 		receivingStaticAddressView = (TextView) view.findViewById(R.id.send_coins_receiving_static_address);
@@ -750,6 +750,7 @@ public final class SendCoinsFragment extends Fragment
 	{
 		super.onDestroyView();
 
+
 		config.setLastExchangeDirection(amountCalculatorLink.getExchangeDirection());
 	}
 
@@ -764,7 +765,7 @@ public final class SendCoinsFragment extends Fragment
 		privateKeyPasswordView.addTextChangedListener(privateKeyPasswordListener);
 
 		// Lo comento porque no tenemos web service de rate
-//		loaderManager.initLoader(ID_RATE_LOADER, null, rateLoaderCallbacks);
+		loaderManager.initLoader(ID_RATE_LOADER, null, rateLoaderCallbacks);
 		// comento a ver que pasa
 //		loaderManager.initLoader(ID_RECEIVING_ADDRESS_BOOK_LOADER, null, receivingAddressLoaderCallbacks);
 //		loaderManager.initLoader(ID_RECEIVING_ADDRESS_NAME_LOADER, null, receivingAddressLoaderCallbacks);
@@ -777,10 +778,10 @@ public final class SendCoinsFragment extends Fragment
 	public void onPause()
 	{
 		// comento a ver que pasa
-//		loaderManager.destroyLoader(ID_RECEIVING_ADDRESS_NAME_LOADER);
-//		loaderManager.destroyLoader(ID_RECEIVING_ADDRESS_BOOK_LOADER);
+		loaderManager.destroyLoader(ID_RECEIVING_ADDRESS_NAME_LOADER);
+		loaderManager.destroyLoader(ID_RECEIVING_ADDRESS_BOOK_LOADER);
 		// comentado por ahora por no tener web service de rato
-//		loaderManager.destroyLoader(ID_RATE_LOADER);
+		loaderManager.destroyLoader(ID_RATE_LOADER);
 
 		privateKeyPasswordView.removeTextChangedListener(privateKeyPasswordListener);
 		amountCalculatorLink.setListener(null);

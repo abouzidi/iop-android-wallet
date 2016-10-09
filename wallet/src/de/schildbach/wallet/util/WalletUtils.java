@@ -60,6 +60,7 @@ import android.text.style.TypefaceSpan;
 import com.google.common.base.Charsets;
 
 import de.schildbach.wallet.Constants;
+import de.schildbach.wallet.ui.models.TransactionCacheData;
 
 /**
  * @author Andreas Schildbach
@@ -150,6 +151,9 @@ public class WalletUtils
 			catch (final ScriptException x)
 			{
 				// swallow
+			}
+			catch (Exception e){
+				e.printStackTrace();
 			}
 		}
 
@@ -388,5 +392,10 @@ public class WalletUtils
 	public static boolean isPayToManyTransaction(final Transaction transaction)
 	{
 		return transaction.getOutputs().size() > 20;
+	}
+
+	public static boolean isPayToManyTransaction(final TransactionCacheData transaction)
+	{
+		return transaction.getOutputsSize() > 20;
 	}
 }

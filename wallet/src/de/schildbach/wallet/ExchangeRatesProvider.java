@@ -163,10 +163,10 @@ public class ExchangeRatesProvider extends ContentProvider {
 			Map<String, ExchangeRate> newExchangeRates = null;
 			if (newExchangeRates == null) {
 				//newExchangeRates = requestExchangeRates(BITCOINAVERAGE_URL, userAgent, BITCOINAVERAGE_SOURCE, BITCOINAVERAGE_FIELDS);
-				final Fiat rate = Fiat.parseFiat(Currency.getInstance(Locale.getDefault()).getCurrencyCode(), IoP_TOKENS_VALUE);
+				final Fiat rate = Fiat.parseFiat(Currency.getInstance("USD").getCurrencyCode(), IoP_TOKENS_VALUE);
 				if (rate.signum() > 0) {
 					newExchangeRates = new HashMap<>();
-					newExchangeRates.put(Currency.getInstance(Locale.getDefault()).getCurrencyCode(), new ExchangeRate(new org.bitcoinj.utils.ExchangeRate(rate), "mati.com"));
+					newExchangeRates.put(Currency.getInstance("USD").getCurrencyCode(), new ExchangeRate(new org.bitcoinj.utils.ExchangeRate(rate), "mati.com"));
 				}
 			}
 			if (newExchangeRates != null)

@@ -23,6 +23,7 @@ import org.bitcoinj.core.Coin;
 import org.bitcoinj.utils.ExchangeRate;
 import org.bitcoinj.utils.Fiat;
 
+import android.util.Log;
 import android.view.View;
 
 import de.schildbach.wallet.Constants;
@@ -155,8 +156,11 @@ public final class CurrencyCalculatorLink
 		return getAmount() != null;
 	}
 
+	static int i = 0;
+
 	private void update()
 	{
+		Log.i(getClass().getName(),"update times: "+i++);
 		IoPAmountView.setEnabled(enabled);
 
 		if (exchangeRate != null)

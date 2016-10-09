@@ -79,6 +79,7 @@ import de.schildbach.wallet.AddressBookProvider;
 import de.schildbach.wallet.Configuration;
 import de.schildbach.wallet.Constants;
 import de.schildbach.wallet.WalletApplication;
+import de.schildbach.wallet.ui.TransactionsAdapter;
 import de.schildbach.wallet.ui.TransactionsAdapter.Warning;
 import de.schildbach.wallet.ui.send.RaiseFeeDialogFragment;
 import de.schildbach.wallet.util.BitmapFragment;

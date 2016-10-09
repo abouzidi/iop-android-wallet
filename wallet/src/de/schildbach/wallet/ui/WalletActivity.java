@@ -31,6 +31,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.VerificationException;
@@ -106,6 +109,7 @@ public final class WalletActivity extends AbstractWalletActivity implements Acti
 	private Wallet wallet;
 
 	private Handler handler = new Handler();
+
 
 	private static final int REQUEST_CODE_SCAN = 0;
 	private static final int REQUEST_CODE_BACKUP_WALLET = 1;
@@ -269,8 +273,10 @@ public final class WalletActivity extends AbstractWalletActivity implements Acti
 		menu.findItem(R.id.wallet_options_restore_wallet).setEnabled(
 				Environment.MEDIA_MOUNTED.equals(externalStorageState) || Environment.MEDIA_MOUNTED_READ_ONLY.equals(externalStorageState));
 		menu.findItem(R.id.wallet_options_backup_wallet).setEnabled(Environment.MEDIA_MOUNTED.equals(externalStorageState));
+
+		final boolean isEncrypted = wallet.isEncrypted();
 		menu.findItem(R.id.wallet_options_encrypt_keys).setTitle(
-				wallet.isEncrypted() ? R.string.wallet_options_encrypt_keys_change : R.string.wallet_options_encrypt_keys_set);
+				isEncrypted ? R.string.wallet_options_encrypt_keys_change : R.string.wallet_options_encrypt_keys_set);
 
 		return true;
 	}

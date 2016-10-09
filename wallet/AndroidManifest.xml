@@ -185,6 +185,12 @@
 			android:theme="@style/My.Theme.ChildActivity"
 			android:windowSoftInputMode="adjustResize" />
 
+		<activity android:name="de.schildbach.wallet.ui.ClemenActivity"
+			android:label=""
+			android:screenOrientation="portrait"
+			android:theme="@style/My.Theme.Fullscreen"
+			/>
+
 		<provider
 			android:name="de.schildbach.wallet.AddressBookProvider"
 			android:authorities="de.schildbach.wallet.regtest.address_book"
