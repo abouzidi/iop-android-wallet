@@ -77,7 +77,7 @@ import de.schildbach.wallet.util.Bluetooth;
 import de.schildbach.wallet.util.Nfc;
 import de.schildbach.wallet.util.Qr;
 import de.schildbach.wallet.util.Toast;
-import de.schildbach.wallet.regtest.R;
+import de.schildbach.wallet.R;
 
 /**
  * @author Andreas Schildbach
@@ -386,9 +386,10 @@ public final class RequestCoinsFragment extends Fragment implements NfcAdapter.C
 
 	private void handleShare()
 	{
-		final String request = determineBitcoinRequestStr(false);
+		String request = determineBitcoinRequestStr(false);
 		final Intent intent = new Intent(Intent.ACTION_SEND);
 		intent.setType("text/plain");
+		//request = request.substring(0,4)+"//"+request.substring(4);
 		intent.putExtra(Intent.EXTRA_TEXT, request);
 		startActivity(Intent.createChooser(intent, getString(R.string.request_coins_share_dialog_title)));
 		log.info("payment request shared via intent: {}", request);

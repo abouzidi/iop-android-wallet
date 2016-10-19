@@ -163,7 +163,7 @@
   <string name="scan_camera_problem_dialog_title">Λυπούμαστε</string>
   <string name="scan_camera_problem_dialog_message">Η φωτογραφική αντιμετωπίζει κάποιο πρόβλημα. Πιθανόν να χρειάζεται επανεκκίνηση.</string>
   <string name="input_parser_io_error">Δεν είναι δυνατή η ανάγνωση δεδομένων:\n%s</string>
-  <string name="input_parser_invalid_IoP_uri">Μη έγκυρο IoP URI:\n%s</string>
+  <string name="input_parser_invalid_bitcoin_uri">Μη έγκυρο IoP URI:\n%s</string>
   <string name="input_parser_unverifyable_paymentrequest">Δεν είναι δυνατή η επαλήθευση της αίτησης πληρωμής:\n%s</string>
   <string name="input_parser_invalid_paymentrequest">Μη έγκυρο αίτημα πληρωμής:\n%s</string>
   <string name="input_parser_invalid_transaction">Μη έγκυρη συναλλαγή:\n%s</string>
@@ -205,7 +205,7 @@
   <string name="about_license_title">Άδεια</string>
   <string name="about_source_title">Πηγαίος κώδικας</string>
   <string name="about_category_credits">Αυτή η εφαρμογή χρησιμοποιεί…</string>
-  <string name="about_credits_IoPj_title">IoPj %s</string>
+  <string name="about_credits_bitcoinj_title">IoPj %s</string>
   <string name="about_credits_zxing_title">ZXing</string>
   <string name="about_community_googleplus_title">Google+ κοινότητα</string>
   <string name="about_community_googleplus_summary">Συζητήσεις σχετικά με την εφαρμογή</string>

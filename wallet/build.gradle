@@ -33,7 +33,7 @@ dependencies {
 }
 
 ext {
-    archivesBaseName = 'bitcoin-wallet'
+    archivesBaseName = 'iop-wallet'
 }
 
 android {
@@ -41,10 +41,10 @@ android {
     buildToolsVersion '24'
 
     defaultConfig {
-        applicationId "org.iop.regtest"
+        applicationId "org.iop.wallet"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 1
+        versionCode 5
         versionName "1"
         multiDexEnabled true
     }

@@ -34,17 +34,17 @@ import android.text.format.DateUtils;
 import com.google.common.io.BaseEncoding;
 import com.squareup.okhttp.OkHttpClient;
 
-import de.schildbach.wallet.regtest.R;
+import de.schildbach.wallet.R;
 
 /**
  * @author Andreas Schildbach
  */
 public final class Constants
 {
-	public static final boolean TEST = R.class.getPackage().getName().contains("_test");
+	public static final boolean TEST = false;//R.class.getPackage().getName().contains("_test");
 
 	/** Network this wallet is on (e.g. testnet or mainnet). */
-	public static final NetworkParameters NETWORK_PARAMETERS = TestNet3Params.get();//RegTestParams.get(); //TEST ? TestNet3Params.get() : MainNetParams.get();
+	public static final NetworkParameters NETWORK_PARAMETERS = MainNetParams.get();//RegTestParams.get(); //TEST ? TestNet3Params.get() : MainNetParams.get();
 
 	/** Bitcoinj global context. */
 	public static final Context CONTEXT = new Context(NETWORK_PARAMETERS);
@@ -116,7 +116,7 @@ public final class Constants
 
 	/** Donation address for tip/donate action. */
 	public static final String DONATION_ADDRESS = NETWORK_PARAMETERS.getId().equals(NetworkParameters.ID_MAINNET)
-			? "pNeSkfSN9nLtxvywCBEyk6Pomh6ArJDYtN" : null;
+			? "pLgSADdhXG2PA42h7Xyv1fPUawdT8sJg9a" : null;
 
 	/** Recipient e-mail address for reports. */
 	public static final String REPORT_EMAIL = "matias.furszyfer@fermat.org";

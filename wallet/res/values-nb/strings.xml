@@ -217,7 +217,7 @@
   <string name="scan_camera_permission_dialog_message">For å skanne QR koder, må du gi tillatelse til å bruke kamera.</string>
   <string name="input_parser_io_error">Kan ikke lese data:\n%s</string>
   <string name="input_parser_cannot_classify">Kan ikke gjenkjenne input:\n%s</string>
-  <string name="input_parser_invalid_IoP_uri">Ugyldig IoP-URI:\n%s</string>
+  <string name="input_parser_invalid_bitcoin_uri">Ugyldig IoP-URI:\n%s</string>
   <string name="input_parser_invalid_address">Fikk ugyldig IoP-adresse!\n(Blanding av Mainnet/Testnet?)</string>
   <string name="input_parser_unverifyable_paymentrequest">Kan ikke verifisere betalingsforespørsel:\n%s</string>
   <string name="input_parser_invalid_paymentrequest">Ugyldig betalingsforespørsel:\n%s</string>

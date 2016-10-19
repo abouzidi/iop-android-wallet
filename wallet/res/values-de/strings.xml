@@ -244,7 +244,7 @@
 
 	<string name="input_parser_io_error">Kann Daten nicht lesen:\n%s</string>
 	<string name="input_parser_cannot_classify">Eingabe nicht erkannt:\n%s</string>
-	<string name="input_parser_invalid_IoP_uri">Ungültige IoP-URI:\n%s</string>
+	<string name="input_parser_invalid_bitcoin_uri">Ungültige IoP-URI:\n%s</string>
 	<string name="input_parser_invalid_address">Ungültige IoP-Adresse gelesen!\n(Versuchst Du Mainnet/Testnet zu mischen?)</string>
 	<string name="input_parser_unverifyable_paymentrequest">Kann Zahlungsanforderung nicht verifizieren:\n%s</string>
 	<string name="input_parser_invalid_paymentrequest">Ungültige Zahlungsanforderung:\n%s</string>
@@ -310,7 +310,7 @@
 	<string name="about_license_title">Lizenz</string>
 	<string name="about_source_title">Quellcode</string>
 	<string name="about_category_credits">Diese App nutzt…</string>
-	<string name="about_credits_IoPj_title">IoPj %s, eine IoP-Protokoll-Implementierung</string>
+	<string name="about_credits_bitcoinj_title">IoPj %s, eine IoP-Protokoll-Implementierung</string>
 	<string name="about_credits_zxing_title">ZXing, eine QR-Code-Bibliothek</string>
 	<string name="about_credits_scrypt_title">Scrypt, implementiert von Will Glozer und Colin Percival</string>
 	<string name="about_community_googleplus_title">Google+ Community</string>

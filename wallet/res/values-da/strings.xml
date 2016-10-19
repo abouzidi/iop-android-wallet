@@ -224,7 +224,7 @@
   <string name="scan_camera_permission_dialog_message">For at skanne QR-koder er du nødt til at give rettigheder til at bruge kameraet.</string>
   <string name="input_parser_io_error">Kan ikke læse data:\n%s</string>
   <string name="input_parser_cannot_classify">Kan ikke genkende input:\n%s</string>
-  <string name="input_parser_invalid_IoP_uri">Ugyldig IoP-URI:\n%s</string>
+  <string name="input_parser_invalid_bitcoin_uri">Ugyldig IoP-URI:\n%s</string>
   <string name="input_parser_invalid_address">Modtog ugyldig IoP-adresse!\n(Forveksler du mainnet/testnet?)</string>
   <string name="input_parser_unverifyable_paymentrequest">Kan ikke verificere betalingsforespørgsel:\n%s</string>
   <string name="input_parser_invalid_paymentrequest">Ugyldig betalingsforespørgsel:\n%s</string>
@@ -286,7 +286,7 @@
   <string name="about_license_title">Licens</string>
   <string name="about_source_title">Kildekode</string>
   <string name="about_category_credits">Denne app bruger…</string>
-  <string name="about_credits_IoPj_title">IoPj %s, en implementation af IoP-protokollen</string>
+  <string name="about_credits_bitcoinj_title">IoPj %s, en implementation af IoP-protokollen</string>
   <string name="about_credits_zxing_title">ZXing, et bibliotek til processering af QR-koder</string>
   <string name="about_credits_scrypt_title">Scrypt, implementeret af Will Glozer og Colin Percival</string>
   <string name="about_community_googleplus_title">Google+-fællesskab</string>

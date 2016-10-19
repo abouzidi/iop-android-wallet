@@ -224,7 +224,7 @@
   <string name="scan_camera_permission_dialog_message">Om QR codes te scannen moet je toestemming geven om de camera te kunnen gebruiken.</string>
   <string name="input_parser_io_error">Kan gegevens niet lezen:\n%s</string>
   <string name="input_parser_cannot_classify">Invoer niet herkend:\n%s</string>
-  <string name="input_parser_invalid_IoP_uri">Ongeldige IoP URI:\n%s</string>
+  <string name="input_parser_invalid_bitcoin_uri">Ongeldige IoP URI:\n%s</string>
   <string name="input_parser_invalid_address">Ongeldig IoPadres ontvangen!\n(Haal je mainnet/testnet door elkaar?)</string>
   <string name="input_parser_unverifyable_paymentrequest">Uw betalingsverzoek:\n%s kan niet geverifieerd worden</string>
   <string name="input_parser_invalid_paymentrequest">Ongeldig betalingsverzoek:\n%s</string>
@@ -286,7 +286,7 @@
   <string name="about_license_title">Licentie</string>
   <string name="about_source_title">Broncode</string>
   <string name="about_category_credits">Deze app gebruikt…</string>
-  <string name="about_credits_IoPj_title">IoPj %s, een IoP protocol implementatie</string>
+  <string name="about_credits_bitcoinj_title">IoPj %s, een IoP protocol implementatie</string>
   <string name="about_credits_zxing_title">ZXing, een QR-code processing bibliotheek</string>
   <string name="about_credits_scrypt_title">Scrypt, geïmplementeerd door Will Glozer en Colin Percival</string>
   <string name="about_community_googleplus_title">Google+ community</string>

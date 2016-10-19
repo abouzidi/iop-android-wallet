@@ -224,7 +224,7 @@
   <string name="scan_camera_permission_dialog_message">Skenování QR kódů vyžaduje oprávnění používat kameru.</string>
   <string name="input_parser_io_error">Nelze přečíst data:\n%s</string>
   <string name="input_parser_cannot_classify">Nelze rozpoznat vstup:\n%s</string>
-  <string name="input_parser_invalid_IoP_uri">Neplatná IoP URI:\n%s</string>
+  <string name="input_parser_invalid_bitcoin_uri">Neplatná IoP URI:\n%s</string>
   <string name="input_parser_invalid_address">Obdržená neplatná IoPová adresa!\n(Nemícháte mainnet/testnet?)</string>
   <string name="input_parser_unverifyable_paymentrequest">Nelze ověřit požadavek na platbu:\n%s</string>
   <string name="input_parser_invalid_paymentrequest">Neplatný požadavek na platbu:\n%s</string>
@@ -286,7 +286,7 @@
   <string name="about_license_title">Licence</string>
   <string name="about_source_title">Zdrojový kód</string>
   <string name="about_category_credits">Aplikace používá…</string>
-  <string name="about_credits_IoPj_title">IoPj %s, implementace IoP protokolu</string>
+  <string name="about_credits_bitcoinj_title">IoPj %s, implementace IoP protokolu</string>
   <string name="about_credits_zxing_title">ZXing, knihovna pro zpracování QR-kódů</string>
   <string name="about_credits_scrypt_title">Scrypt, implementovali Will Glozer a Colin Percival</string>
   <string name="about_community_googleplus_title">Komunita Google+</string>

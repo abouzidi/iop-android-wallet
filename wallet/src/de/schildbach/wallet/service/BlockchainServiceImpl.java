@@ -107,7 +107,7 @@ import de.schildbach.wallet.ui.WalletActivity;
 import de.schildbach.wallet.util.CrashReporter;
 import de.schildbach.wallet.util.ThrottlingWalletChangeListener;
 import de.schildbach.wallet.util.WalletUtils;
-import de.schildbach.wallet.regtest.R;
+import de.schildbach.wallet.R;
 
 /**
  * @author Andreas Schildbach
@@ -435,47 +435,47 @@ public class BlockchainServiceImpl extends android.app.Service implements Blockc
 			peerGroup.setPeerDiscoveryTimeoutMillis(Constants.PEER_DISCOVERY_TIMEOUT_MS);
 
 
-				peerGroup.addPeerDiscovery(new PeerDiscovery()
+			peerGroup.addPeerDiscovery(new PeerDiscovery()
+			{
+				private final PeerDiscovery normalPeerDiscovery = MultiplexingDiscovery.forServices(Constants.NETWORK_PARAMETERS, 0);
+
+				@Override
+				public InetSocketAddress[] getPeers(final long services, final long timeoutValue, final TimeUnit timeoutUnit)
+						throws PeerDiscoveryException
 				{
-					private final PeerDiscovery normalPeerDiscovery = MultiplexingDiscovery.forServices(Constants.NETWORK_PARAMETERS, 0);
+					final List<InetSocketAddress> peers = new LinkedList<InetSocketAddress>();
 
-					@Override
-					public InetSocketAddress[] getPeers(final long services, final long timeoutValue, final TimeUnit timeoutUnit)
-							throws PeerDiscoveryException
+					boolean needsTrimPeersWorkaround = false;
+
+					if (hasTrustedPeer)
 					{
-						final List<InetSocketAddress> peers = new LinkedList<InetSocketAddress>();
+						log.info("trusted peer '" + trustedPeerHost + "'" + (connectTrustedPeerOnly ? " only" : ""));
 
-						boolean needsTrimPeersWorkaround = false;
-
-						if (hasTrustedPeer)
+						final InetSocketAddress addr = new InetSocketAddress(trustedPeerHost, Constants.NETWORK_PARAMETERS.getPort());
+						if (addr.getAddress() != null)
 						{
-							log.info("trusted peer '" + trustedPeerHost + "'" + (connectTrustedPeerOnly ? " only" : ""));
-
-							final InetSocketAddress addr = new InetSocketAddress(trustedPeerHost, Constants.NETWORK_PARAMETERS.getPort());
-							if (addr.getAddress() != null)
-							{
-								peers.add(addr);
-								needsTrimPeersWorkaround = true;
-							}
+							peers.add(addr);
+							needsTrimPeersWorkaround = true;
 						}
-
-						if (!connectTrustedPeerOnly)
-							peers.addAll(Arrays.asList(normalPeerDiscovery.getPeers(services, timeoutValue, timeoutUnit)));
-
-						// workaround because PeerGroup will shuffle peers
-						if (needsTrimPeersWorkaround)
-							while (peers.size() >= maxConnectedPeers)
-								peers.remove(peers.size() - 1);
-
-						return peers.toArray(new InetSocketAddress[0]);
 					}
 
-					@Override
-					public void shutdown()
-					{
-						normalPeerDiscovery.shutdown();
-					}
-				});
+					if (!connectTrustedPeerOnly)
+						peers.addAll(Arrays.asList(normalPeerDiscovery.getPeers(services, timeoutValue, timeoutUnit)));
+
+					// workaround because PeerGroup will shuffle peers
+					if (needsTrimPeersWorkaround)
+						while (peers.size() >= maxConnectedPeers)
+							peers.remove(peers.size() - 1);
+
+					return peers.toArray(new InetSocketAddress[0]);
+				}
+
+				@Override
+				public void shutdown()
+				{
+					normalPeerDiscovery.shutdown();
+				}
+			});
 //			if(Constants.NETWORK_PARAMETERS.equals(TestNet3Params.get() )) {
 ////					peerGroup.addPeerDiscovery(new DnsDiscovery(Constants.NETWORK_PARAMETERS));
 //				for (PeerAddress peerAddress : TestnetUtil.getConnectedPeers(Constants.NETWORK_PARAMETERS)) {

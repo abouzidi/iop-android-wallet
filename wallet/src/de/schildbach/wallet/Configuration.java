@@ -36,7 +36,7 @@ import java.util.Currency;
 import java.util.Locale;
 
 import de.schildbach.wallet.ExchangeRatesProvider.ExchangeRate;
-import de.schildbach.wallet.regtest.R;
+import de.schildbach.wallet.R;
 
 /**
  * @author Andreas Schildbach

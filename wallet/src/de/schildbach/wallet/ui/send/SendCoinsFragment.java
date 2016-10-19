@@ -134,7 +134,7 @@ import de.schildbach.wallet.ui.TransactionsAdapter;
 import de.schildbach.wallet.util.Bluetooth;
 import de.schildbach.wallet.util.Nfc;
 import de.schildbach.wallet.util.WalletUtils;
-import de.schildbach.wallet.regtest.R;
+import de.schildbach.wallet.R;
 
 /**
  * @author Andreas Schildbach
@@ -666,8 +666,8 @@ public final class SendCoinsFragment extends Fragment
 //		receivingAddressViewAdapter = new ReceivingAddressViewAdapter(activity);
 //		receivingAddressLoaderCallbacks = new ReceivingAddressLoaderCallbacks(activity, receivingAddressViewAdapter);
 //		receivingAddressView.setAdapter(receivingAddressViewAdapter);
-//		receivingAddressView.setOnFocusChangeListener(receivingAddressListener);
-//		receivingAddressView.addTextChangedListener(receivingAddressListener);
+		receivingAddressView.setOnFocusChangeListener(receivingAddressListener);
+		receivingAddressView.addTextChangedListener(receivingAddressListener);
 //		receivingAddressView.setOnItemClickListener(receivingAddressListener);
 
 		receivingStaticView = view.findViewById(R.id.send_coins_receiving_static);

@@ -30,8 +30,8 @@ import android.preference.PreferenceScreen;
 
 import de.schildbach.wallet.Constants;
 import de.schildbach.wallet.WalletApplication;
-import de.schildbach.wallet.regtest.BuildConfig;
-import de.schildbach.wallet.regtest.R;
+import de.schildbach.wallet.BuildConfig;
+import de.schildbach.wallet.R;
 import de.schildbach.wallet.ui.ClemenActivity;
 import de.schildbach.wallet.util.Toast;
 
@@ -79,13 +79,13 @@ public final class AboutFragment extends PreferenceFragment
 			@Override
 			public boolean onPreferenceClick(Preference preference) {
 				touch++;
-				if (touch==30) {
-					startActivity(new Intent(getActivity(), ClemenActivity.class));
-				}else if(touch<30 && touch>15) {
-					if(lastToast!=null)lastToast.cancel();
-					lastToast = android.widget.Toast.makeText(getActivity(),"You need "+(30-touch)+" to be especial",android.widget.Toast.LENGTH_SHORT);
-					lastToast.show();
-				}
+//				if (touch==30) {
+//					startActivity(new Intent(getActivity(), ClemenActivity.class));
+//				}else if(touch<30 && touch>15) {
+//					if(lastToast!=null)lastToast.cancel();
+//					lastToast = android.widget.Toast.makeText(getActivity(),"You need "+(30-touch)+" to be especial",android.widget.Toast.LENGTH_SHORT);
+//					lastToast.show();
+//				}
 				return true;
 			}
 		});

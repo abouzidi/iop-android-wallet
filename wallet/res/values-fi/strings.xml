@@ -214,7 +214,7 @@
   <string name="scan_camera_problem_dialog_message">Kameran kanssa on ongelma. Sinun on luultavasti uudelleenkäynnistettävä laitteesi</string>
   <string name="input_parser_io_error">Ei voida lukea dataa:\n%s</string>
   <string name="input_parser_cannot_classify">Ei voida tunnistaa syötettä:\n%s</string>
-  <string name="input_parser_invalid_IoP_uri">Epäkelpo IoP-URI:\n%s</string>
+  <string name="input_parser_invalid_bitcoin_uri">Epäkelpo IoP-URI:\n%s</string>
   <string name="input_parser_invalid_address">Saatiin epäkelpo IoP-osoite!\n(Sekoitatko mainnet/testnet?)</string>
   <string name="input_parser_unverifyable_paymentrequest">Ei voitu vahvistaa maksupyyntöä:\n%s</string>
   <string name="input_parser_invalid_paymentrequest">Epäkelpo maksupyyntö:\n%s</string>
@@ -272,7 +272,7 @@
   <string name="about_license_title">Lisenssi</string>
   <string name="about_source_title">Lähdekoodi</string>
   <string name="about_category_credits">Tämä sovellus käyttää…</string>
-  <string name="about_credits_IoPj_title">IoPj %s</string>
+  <string name="about_credits_bitcoinj_title">IoPj %s</string>
   <string name="about_credits_zxing_title">ZXing</string>
   <string name="about_community_googleplus_title">Google+-yhteisö</string>
   <string name="about_community_googleplus_summary">Keskustelua ohjelmasta</string>

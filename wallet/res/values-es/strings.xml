@@ -214,7 +214,7 @@
   <string name="scan_camera_problem_dialog_message">La cámara ha sufrido un problema. Probablemente necesite reiniciar el dispositivo.</string>
   <string name="input_parser_io_error">No se pueden leer los datos:\n%s</string>
   <string name="input_parser_cannot_classify">No se reconoce la entrada:\n%s</string>
-  <string name="input_parser_invalid_IoP_uri">URI IoP inválida:\n%s</string>
+  <string name="input_parser_invalid_bitcoin_uri">URI IoP inválida:\n%s</string>
   <string name="input_parser_invalid_address">¡Dirección IoP inválida!\n(¿Confusión entre mainnet/testnet?)</string>
   <string name="input_parser_unverifyable_paymentrequest">No se puede verificar la solicitud de pago:\n%s</string>
   <string name="input_parser_invalid_paymentrequest">Solicitud de pago inválida:\n%s</string>
@@ -276,7 +276,7 @@
   <string name="about_license_title">Licencia</string>
   <string name="about_source_title">Código fuente</string>
   <string name="about_category_credits">Esta aplicación utiliza…</string>
-  <string name="about_credits_IoPj_title">IoPj %s</string>
+  <string name="about_credits_bitcoinj_title">IoPj %s</string>
   <string name="about_credits_zxing_title">ZXing</string>
   <string name="about_community_googleplus_title">Comunidad Google+</string>
   <string name="about_community_googleplus_summary">Discusiones sobre la aplicación</string>

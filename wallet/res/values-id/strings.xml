@@ -117,7 +117,7 @@
 	<string name="import_keys_intent_filter_action">Pulihkan kunci pribadi</string>
 	<string name="scan_camera_problem_dialog_title">Maaf</string>
 	<string name="scan_camera_problem_dialog_message">Kamera mengalami masalah. Anda mungkin harus menyala-ulangkan ponsel.</string>
-	<string name="input_parser_invalid_IoP_uri">Tautan IoP Salah:\n%s</string>
+	<string name="input_parser_invalid_bitcoin_uri">Tautan IoP Salah:\n%s</string>
 	<string name="input_parser_invalid_address">Alamat IoP salah!\n(Keliru dgn Mainet/Testnet?)</string>
 	<string name="preferences_activity_title">Pengaturan</string>
 	<string name="preferences_category_diagnostics">Diagnosa</string>
